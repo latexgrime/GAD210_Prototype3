@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 8625805600974615566}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -205,7 +205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4923957527357696022}
   m_Layer: 0
-  m_Name: CameraPos
+  m_Name: CamTargetPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,7 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6062774315492011939}
   m_Layer: 0
-  m_Name: Orientation
+  m_Name: CamTargetOrientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

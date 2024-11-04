@@ -330,14 +330,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 972715328340894093, guid: 2b7c844be61e3aa4397caeeb1495f65c, type: 3}
-      propertyPath: cameraOrientation
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2520828831033047169, guid: 2b7c844be61e3aa4397caeeb1495f65c, type: 3}
-      propertyPath: cameraTargetPosition
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5502095864098659077, guid: 2b7c844be61e3aa4397caeeb1495f65c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -438,18 +430,6 @@ PrefabInstance:
     - target: {fileID: 5719225085415310129, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5719225085415310129, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5738985094799986353, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
-      propertyPath: m_Name
-      value: CamTargetPosition
-      objectReference: {fileID: 0}
-    - target: {fileID: 6104054453982580370, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
-      propertyPath: m_Name
-      value: CamTargetOrientation
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

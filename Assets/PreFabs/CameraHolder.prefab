@@ -107,7 +107,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensitivityX: 400
   sensitivityY: 400
-  cameraOrientation: {fileID: 0}
 --- !u!1 &7104253882571288984
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,4 +152,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5679789974fefe4e9a8c740ccee4d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTargetPosition: {fileID: 0}
