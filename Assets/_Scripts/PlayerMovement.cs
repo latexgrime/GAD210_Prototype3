@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace GAD210.Leonardo.Player.Movement
 {
+    /// <summary>
+    ///     Script in charge of handling the input for the movement of the player.
+    /// </summary>
     public class PlayerMovement : MonoBehaviour
     {
         [Header("Movement")] public float moveSpeed;

@@ -3,12 +3,15 @@ using UnityEngine;
 
 namespace GAD210.Leonardo.Player.CameraControl
 {
+    /// <summary>
+    ///     This script is in charge on handling the Input for the camera and handling the camera itself.
+    /// </summary>
     public class PlayerCamera : MonoBehaviour
     {
-        public float sensitivityX;
-        public float sensitivityY;
+        [SerializeField] private float sensitivityX;
+        [SerializeField] private float sensitivityY;
 
-        public Transform cameraOrientation;
+        private Transform camTargetOrientation;
 
         private float xRotation;
         private float yRotation;
@@ -17,6 +20,9 @@ namespace GAD210.Leonardo.Player.CameraControl
         {
             // Makes cursor invisible and locks in in the middle of the screen.
             InitializeCursor();
+
+            // Get the reference to the CamTargetOrientation game object.
+            camTargetOrientation = GameObject.FindGameObjectWithTag("Player").transform.Find("CamTargetOrientation");
         }
 
         private static void InitializeCursor()
@@ -30,18 +36,19 @@ namespace GAD210.Leonardo.Player.CameraControl
         private void Update()
         {
             // Handle player input.
-            float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivityX;
-            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivityY;
+            var mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivityX;
+            var mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivityY;
 
             // Handle camera rotation.
             yRotation += mouseX;
             xRotation -= mouseY;
-            
+
             // Clamp rotation so player can't spin around like crazy.
             xRotation = Math.Clamp(xRotation, -90f, 90f);
-            
-            transform.rotation = Quaternion.Euler(xRotation, yRotation,0);
-            transform.rotation = Quaternion.Euler(0, yRotation, 0);
+
+            // Rotate camera and the cameraOrientation object.
+            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            camTargetOrientation.rotation = Quaternion.Euler(0, yRotation, 0);
         }
     }
 }
