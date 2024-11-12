@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -24,10 +25,19 @@ public class CardManager : MonoBehaviour
         InstantiateCardsInShuffledPosition();
     }
 
+    private IEnumerator FlipCardAfterDelay(Card card, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        card.FlipCard();
+    }
+    
     private void InstantiateCardsInShuffledPosition()
     {
         for (var i = 0; i < cardPositions.Length; i++)
-            Instantiate(cardPool[i], cardPositions[i].position, Quaternion.identity);
+        {
+            GameObject cardInstance = Instantiate(cardPool[i], cardPositions[i].position, Quaternion.Euler(0,0,0));
+            StartCoroutine(FlipCardAfterDelay(cardInstance.GetComponent<Card>(), 3f));
+        }
     }
 
     private void ShuffleCards()
