@@ -1,9 +1,12 @@
 using System;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    private CardManager cardManager;
+    
     [SerializeField] private float rayCastDistance;
     [SerializeField] private GameObject crosshair;
     private Animator crosshairAnimator;
@@ -17,6 +20,7 @@ public class PlayerInteraction : MonoBehaviour
     // Get the required components.
     private void GetComponents()
     {
+        cardManager = FindObjectOfType<CardManager>();
         crosshairAnimator = crosshair.GetComponent<Animator>();
         crosshairImage = crosshair.GetComponent<Image>();
         crosshairImage.color = Color.white;
@@ -35,10 +39,22 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (hit.transform.CompareTag($"Card"))
             {
-                Debug.Log(hit.transform.name);
                 crosshairAnimator.SetBool("Interacting",true);
                 crosshairImage.color = Color.green;
+                
+                // If the player clicks and the cards are not being reset, can flip the card the player is looking at.
+                if (Input.GetKeyUp(KeyCode.Mouse0) && !cardManager.isResetting)
+                {
+                    Card cardInteracted = hit.transform.GetComponentInParent<Card>();
+                    
+                    // This checks if the card the player is interacting with is not the same they already clicked.
+                    if (!cardManager.selectedCards.Contains(cardInteracted))
+                    {
+                        cardInteracted.FlipCard();
+                        cardManager.selectedCards.Add(cardInteracted);
+                    }
 
+                }
             }
             else if (!hit.transform.CompareTag($"Card") || hit.transform == null)
             {

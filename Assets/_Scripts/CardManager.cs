@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class CardManager : MonoBehaviour
     // Pool that will contain all cards (will contain double the amount of the cards array).
     private readonly List<GameObject> cardPool = new();
 
+    #region Game Preparation
     private void Start()
     {
         // Just to check if the length of the transforms is not pair (which makes the game literally unplayable),
@@ -36,7 +38,7 @@ public class CardManager : MonoBehaviour
         for (var i = 0; i < cardPositions.Length; i++)
         {
             GameObject cardInstance = Instantiate(cardPool[i], cardPositions[i].position, Quaternion.Euler(0,0,0));
-            StartCoroutine(FlipCardAfterDelay(cardInstance.GetComponent<Card>(), 3f));
+            StartCoroutine(FlipCardAfterDelay(cardInstance.GetComponent<Card>(), 5f));
         }
     }
 
@@ -63,4 +65,60 @@ public class CardManager : MonoBehaviour
             cardPool.Add(card);
         }
     }
+    #endregion
+
+    #region Game Manager
+
+    public List<Card> selectedCards = new List<Card>();
+    // If the counter is the same as the amount of cards in the GameObject array of cards (line 10), then the game is won. (because all pairs are facing up)
+    private int correctGuessesCounter;
+    public bool isResetting;
+
+    private void Update()
+    {
+        if (selectedCards.Count >= 2)
+        {
+            Debug.Log($"The selected cards are: {selectedCards}");
+            if (selectedCards[0].GetCardType() == selectedCards[1].GetCardType())
+            {
+                Debug.Log("Match.");
+                correctGuessesCounter++;
+                selectedCards.Clear();
+            }
+            else
+            {
+                Debug.Log("Not a match.");
+                if (!isResetting)
+                {
+                    StartCoroutine(ResetCard());
+                }
+            }
+        }
+
+        CheckIfWon();
+    }
+
+    private IEnumerator ResetCard()
+    {
+        isResetting = true;
+        yield return new WaitForSeconds(1f);
+        foreach (var card in selectedCards)
+        {
+            card.FlipCard();
+        }
+        selectedCards.Clear();
+        isResetting = false;
+    }
+
+    
+    // Checks if the game is won.
+    private void CheckIfWon()
+    {
+        if (correctGuessesCounter == cards.Length)
+        {
+            Debug.Log("Game won.");
+        }
+    }
+    
+    #endregion
 }
