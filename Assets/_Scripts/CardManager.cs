@@ -165,13 +165,7 @@ public class CardManager : MonoBehaviour
 
             yield return new WaitForSeconds(movingDuration);
             
-            (card1.transform.position, card2.transform.position) = (card2.transform.position, card1.transform.position);
             
-            // Doing the above is the same as doing the following (thanks rider for the reformatting):
-            
-            // Vector3 temporaryPosition = card1.transform.position;
-            // card1.transform.position = card2.transform.position;
-            // card2.transform.position = temporaryPosition;
         }
     }
 
