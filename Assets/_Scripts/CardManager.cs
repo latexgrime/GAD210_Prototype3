@@ -9,6 +9,9 @@ public class CardManager : MonoBehaviour
 {
     // The time the cards are going to be show to the player at the beginning.
     [SerializeField] private float hintTime;
+    [SerializeField] private float shuffleInterval = 5f;
+    [SerializeField] private float movingDuration = 1.5f;
+    
     [SerializeField] private Transform[] cardPositions;
     [SerializeField] private GameObject[] cards;
 
@@ -29,13 +32,22 @@ public class CardManager : MonoBehaviour
         DuplicateCards();
         ShuffleCards();
         InstantiateCardsInShuffledPosition();
+        StartCoroutine(ShuffleCardsPeriodically());
     }
-    
+
+    private List<GameObject> instantiatedCards = new List<GameObject>();
     private void InstantiateCardsInShuffledPosition()
     {
         for (var i = 0; i < cardPositions.Length; i++)
         {
             GameObject cardInstance = Instantiate(cardPool[i], cardPositions[i].position, Quaternion.Euler(0,0,0));
+            
+            // Set the instanced card as a child of the position object, to be able to access the card just by using the position.
+            cardInstance.transform.SetParent(cardPositions[i]);
+            
+            // DEBUG - Delete later.
+            instantiatedCards.Add(cardInstance);
+            
             Card cardScript = cardInstance.GetComponentInParent<Card>();
             if (cardScript != null)
             {
@@ -126,6 +138,56 @@ public class CardManager : MonoBehaviour
         {
             Debug.Log("Game won.");
         }
+    }
+
+    private IEnumerator ShuffleCardsPeriodically()
+    {
+        // This keeps happening (add to a timer in the future).
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(shuffleInterval, shuffleInterval + 4));
+
+            // The two positions that are going to be changing places.
+            int index1 = Random.Range(0, instantiatedCards.Count);
+            int index2 = Random.Range(0, instantiatedCards.Count);
+
+            // This is to make sure that both positions are not the same.
+            while (index1 == index2)
+            {
+                index2 = Random.Range(0, instantiatedCards.Count);
+            }
+
+            GameObject card1 = instantiatedCards[index1]; // Gets the first child which is the card occupying this space.
+            GameObject card2 = instantiatedCards[index2];
+
+            StartCoroutine(AnimatePeriodicShuffle(card1.transform, cardPositions[index2].position, movingDuration));
+            StartCoroutine(AnimatePeriodicShuffle(card2.transform, cardPositions[index1].position, movingDuration));
+
+            yield return new WaitForSeconds(movingDuration);
+            
+            (card1.transform.position, card2.transform.position) = (card2.transform.position, card1.transform.position);
+            
+            // Doing the above is the same as doing the following (thanks rider for the reformatting):
+            
+            // Vector3 temporaryPosition = card1.transform.position;
+            // card1.transform.position = card2.transform.position;
+            // card2.transform.position = temporaryPosition;
+        }
+    }
+
+    private IEnumerator AnimatePeriodicShuffle(Transform card, Vector3 targetPosition, float animDuration)
+    {
+        Vector3 startPosition = card.position;
+        float timeElapsed = 0f;
+
+        while (timeElapsed < animDuration)
+        {
+            card.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / animDuration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        card.position = targetPosition;
     }
     
     #endregion
