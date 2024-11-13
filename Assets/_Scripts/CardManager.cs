@@ -98,7 +98,6 @@ public class CardManager : MonoBehaviour
     {
         if (selectedCards.Count >= 2)
         {
-            Debug.Log($"The selected cards are: {selectedCards}");
             if (selectedCards[0].GetCardType() == selectedCards[1].GetCardType())
             {
                 Debug.Log("Match.");
@@ -160,6 +159,8 @@ public class CardManager : MonoBehaviour
             GameObject card1 = instantiatedCards[index1]; // Gets the first child which is the card occupying this space.
             GameObject card2 = instantiatedCards[index2];
 
+            // Correct the indexes of the cards in the list so it doesn't de-synchronize in the future.
+            // (This was causing the bug of the cards being overlapped)
             instantiatedCards[index1] = card2;
             instantiatedCards[index2] = card1;
             
