@@ -93,10 +93,10 @@ public class CardManager : MonoBehaviour
     // If the counter is the same as the amount of cards in the GameObject array of cards (line 10), then the game is won. (because all pairs are facing up)
     private int correctGuessesCounter;
     public bool isResetting;
-
+    public bool isShuffling = false;
     private void Update()
     {
-        if (selectedCards.Count >= 2)
+        if (selectedCards.Count >= 2 && !isShuffling)
         {
             Debug.Log($"The selected cards are: {selectedCards}");
             if (selectedCards[0].GetCardType() == selectedCards[1].GetCardType())
@@ -124,6 +124,7 @@ public class CardManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         foreach (var card in selectedCards)
         {
+            yield return new WaitForSeconds(0.2f);
             card.FlipCard();
         }
         selectedCards.Clear();
@@ -145,6 +146,8 @@ public class CardManager : MonoBehaviour
         // This keeps happening (add to a timer in the future).
         while (true)
         {
+            yield return new WaitUntil(() => !isResetting);
+            
             yield return new WaitForSeconds(Random.Range(shuffleInterval, shuffleInterval + 4));
 
             // The two positions that are going to be changing places.
@@ -174,6 +177,9 @@ public class CardManager : MonoBehaviour
         Vector3 startPosition = card.position;
         float timeElapsed = 0f;
 
+        // To prevent sudden shifts (quick workaround for overlapping cards when the player interacts with cards)
+        card.position = startPosition;
+        
         while (timeElapsed < animDuration)
         {
             card.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / animDuration);
