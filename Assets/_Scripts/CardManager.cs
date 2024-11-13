@@ -160,6 +160,9 @@ public class CardManager : MonoBehaviour
             GameObject card1 = instantiatedCards[index1]; // Gets the first child which is the card occupying this space.
             GameObject card2 = instantiatedCards[index2];
 
+            instantiatedCards[index1] = card2;
+            instantiatedCards[index2] = card1;
+            
             StartCoroutine(AnimatePeriodicShuffle(card1.transform, cardPositions[index2].position, movingDuration));
             StartCoroutine(AnimatePeriodicShuffle(card2.transform, cardPositions[index1].position, movingDuration));
 
