@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - CameraHolder
+  - Card
   layers:
   - Default
   - TransparentFX
