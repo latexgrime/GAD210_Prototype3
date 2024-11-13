@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintTime: 2.5
-  shuffleInterval: 5
+  shuffleInterval: 3
   movingDuration: 1.5
   cardPositions:
   - {fileID: 200458187}
