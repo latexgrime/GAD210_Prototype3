@@ -1,10 +1,13 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    private bool facingUp = true;
+    public bool facingUp = true;
     public bool cardSelected = false;
+    
+
 
     public enum cardType
     {
@@ -25,21 +28,34 @@ public class Card : MonoBehaviour
     
     public void FlipCard()
     {
-        FlipAnimation();
-    }
-
-    // FUTURE - Make the animation slower
-    private void FlipAnimation()
-    {
-        facingUp = !facingUp;
-
         if (facingUp)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            StartCoroutine(FlipAnimation(new Vector3(0,0,180)));
         }
         else
         {
-            transform.rotation = Quaternion.Euler(0, 0, 180);
+            StartCoroutine(FlipAnimation(new Vector3(0,0,0)));
         }
+
+        facingUp = !facingUp;
+    }
+
+    // This is for the animation of the flip.
+    [SerializeField] private float flipDuration = 0.5f;
+    // FUTURE - Make the animation slower
+    private IEnumerator FlipAnimation(Vector3 targetRotation)
+    {
+        float timeElapsed = 0f;
+        Quaternion startRotation = transform.rotation;
+        Quaternion endRotation = Quaternion.Euler(targetRotation);
+
+        while (timeElapsed < flipDuration)
+        {
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, timeElapsed / flipDuration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.rotation = endRotation;
     }
 }

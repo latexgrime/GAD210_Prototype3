@@ -1,16 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class CardManager : MonoBehaviour
 {
+    // The time the cards are going to be show to the player at the beginning.
+    [SerializeField] private float hintTime;
     [SerializeField] private Transform[] cardPositions;
     [SerializeField] private GameObject[] cards;
 
     // Pool that will contain all cards (will contain double the amount of the cards array).
     private readonly List<GameObject> cardPool = new();
+    
 
     #region Game Preparation
     private void Start()
@@ -26,22 +30,26 @@ public class CardManager : MonoBehaviour
         ShuffleCards();
         InstantiateCardsInShuffledPosition();
     }
-
-    private IEnumerator FlipCardAfterDelay(Card card, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        card.FlipCard();
-    }
     
     private void InstantiateCardsInShuffledPosition()
     {
         for (var i = 0; i < cardPositions.Length; i++)
         {
             GameObject cardInstance = Instantiate(cardPool[i], cardPositions[i].position, Quaternion.Euler(0,0,0));
-            StartCoroutine(FlipCardAfterDelay(cardInstance.GetComponent<Card>(), 5f));
+            Card cardScript = cardInstance.GetComponentInParent<Card>();
+            if (cardScript != null)
+            {
+                StartCoroutine(FlipCardAfterDelay(cardScript, hintTime));
+            }
         }
     }
-
+    
+    private IEnumerator FlipCardAfterDelay(Card card, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        card.FlipCard();
+    }
+    
     private void ShuffleCards()
     {
         for (var i = 0; i < cardPool.Count; i++)
