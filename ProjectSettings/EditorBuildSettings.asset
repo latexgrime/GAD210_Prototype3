@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MemoryCards.unity
+    guid: e7393faae1210df48a441a23368dacfa
   m_configObjects: {}
