@@ -10,9 +10,7 @@ namespace GAD210.Leonardo.Player.Movement
     {
         [Header("Movement")] 
         private float moveSpeed;
-
         public float groundDrag;
-
         public float jumpForce;
         public float jumpCooldown;
         public float airMultiplier;
@@ -29,9 +27,17 @@ namespace GAD210.Leonardo.Player.Movement
         public float playerHeight;
         public LayerMask whatIsGround;
         [SerializeField] private bool grounded;
-
+        private bool wasGrounded;
         public Transform orientation;
 
+        [Header("SFX")] 
+        private AudioSource audioSource;
+
+        [SerializeField] private AudioClip walkingInSandSFX;
+        [SerializeField] private AudioClip walkingInWaterSFX;
+        [SerializeField] private AudioClip landingSFX;
+        [SerializeField] private AudioClip jumpingSFX;
+            
         private float horizontalInput;
         private float verticalInput;
 
@@ -43,6 +49,7 @@ namespace GAD210.Leonardo.Player.Movement
         {
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;
+            audioSource = GetComponent<AudioSource>();
 
             readyToJump = true;
         }
@@ -50,8 +57,8 @@ namespace GAD210.Leonardo.Player.Movement
         private void Update()
         {
             // Ground check.
-                grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, whatIsGround);
-
+                grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 1.1f, whatIsGround);
+                
             MyInput();
             SpeedControl();
 
@@ -60,11 +67,19 @@ namespace GAD210.Leonardo.Player.Movement
                 rb.drag = groundDrag;
             else
                 rb.drag = 0;
+
+            wasGrounded = grounded;
         }
 
         private void FixedUpdate()
         {
             MovePlayer();
+            
+            // Play the landing sfx once.
+            if (grounded && !wasGrounded)
+            {
+                audioSource.PlayOneShot(landingSFX);
+            }
         }
 
         private void MyInput()
@@ -124,10 +139,13 @@ namespace GAD210.Leonardo.Player.Movement
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            
+            audioSource.PlayOneShot(jumpingSFX);
         }
 
         private void ResetJump()
         {
+            audioSource.PlayOneShot(landingSFX);
             readyToJump = true;
         }
     }
