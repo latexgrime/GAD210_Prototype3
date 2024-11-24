@@ -1,6 +1,4 @@
 using System;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -9,30 +7,37 @@ public class PlayerInteraction : MonoBehaviour
 {
     private GameObject player;
     private CardManager cardManager;
-    
-    [Header("- Crosshair settings")]
-    [SerializeField] private GameObject crosshair;
+
+    [Header("- Crosshair settings")] [SerializeField]
+    private GameObject crosshair;
+
     private Animator crosshairAnimator;
     private Image crosshairImage;
 
     [Header("- Item interaction")] [SerializeField]
     private KeyCode pickUpObjectKeycode = KeyCode.E;
-    [SerializeField] private float objectInteractionDistance = 3f;
-    [SerializeField] private float objectInteractionRadius = 1f;
-    [FormerlySerializedAs("objectDistance")] [SerializeField] private float heldObjectPositionDistance = 2f;
-    [FormerlySerializedAs("objectHeight")] [SerializeField] private float heldObjectHeight = 0f;
+
+    [SerializeField] private float objectInteractionDistance = 3f; 
+    [SerializeField] private float heldObjectPositionDistance = 2f;
+
+    [FormerlySerializedAs("objectHeight")] [SerializeField]
+    private float heldObjectHeight;
+
     [SerializeField] private GameObject heldObject;
+
     /// <summary>
-    /// The force intensity applied to the object when picked up.
+    ///     The force intensity applied to the object when picked up.
     /// </summary>
     [SerializeField] private float movingObjectForce = 500f;
+
     /// <summary>
-    /// Setting a large number for this so the amount of force applied when picking up an object doesn't break the immersion.
+    ///     Setting a large number for this so the amount of force applied when picking up an object doesn't break the
+    ///     immersion.
     /// </summary>
     [SerializeField] private float heldObjectDragTarget = 25f;
 
     private float heldObjectMainDrag;
-    
+
     private void Start()
     {
         GetComponents();
@@ -54,18 +59,18 @@ public class PlayerInteraction : MonoBehaviour
         CardInteractionChecker();
         PickUpOrDropObjectCheck();
     }
-    
+
     private void FixedUpdate()
     {
         PickedUpObjectPhysics();
     }
-    
+
     private void PickUpOrDropObjectCheck()
     {
         // If the player is already holding an object.
         if (heldObject)
         {
-            Rigidbody heldObjectRb = heldObject.GetComponent<Rigidbody>();
+            var heldObjectRb = heldObject.GetComponent<Rigidbody>();
             // Drop the object.
             if (Input.GetKeyDown(pickUpObjectKeycode))
             {
@@ -80,14 +85,14 @@ public class PlayerInteraction : MonoBehaviour
             // If there is no object that was picked up, and the player presses E...
             if (Input.GetKeyDown(pickUpObjectKeycode))
             {
-                RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward, objectInteractionDistance);
+                var hits = Physics.RaycastAll(transform.position, transform.forward, objectInteractionDistance);
                 var hitIndex = Array.FindIndex(hits, hit => hit.transform.tag == "CanPickUp");
 
                 if (hitIndex != -1)
                 {
                     var hitObject = hits[hitIndex].transform.gameObject;
                     heldObject = hitObject;
-                    Rigidbody heldObjectRb = heldObject.GetComponent<Rigidbody>();
+                    var heldObjectRb = heldObject.GetComponent<Rigidbody>();
                     // Save the original drag value the object had to apply it later when the player drops the object.
                     heldObjectMainDrag = heldObjectRb.drag;
                     // Set the drag to the drag target value. This is to fix the problem with the object receiving too much force when picked up.
@@ -102,12 +107,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, objectInteractionDistance))
-        {
             if (hit.transform.CompareTag("Card"))
-            {
                 HandleCardInteraction(hit);
-            }
-        }
     }
 
     private void PickedUpObjectPhysics()
@@ -115,14 +116,14 @@ public class PlayerInteraction : MonoBehaviour
         // If the player has an object picked up.
         if (heldObject != null)
         {
-            Rigidbody heldObjectRb = heldObject.GetComponent<Rigidbody>();
-            Vector3 moveObjectTo =
+            var heldObjectRb = heldObject.GetComponent<Rigidbody>();
+            var moveObjectTo =
                 transform.position + heldObjectPositionDistance * transform.forward + heldObjectHeight * transform.up;
-            Vector3 positionDifference = moveObjectTo - heldObject.transform.position;
-            
+            var positionDifference = moveObjectTo - heldObject.transform.position;
+
             // Set the position of the grabbed object to be in front of the player.
             heldObjectRb.AddForce(positionDifference * movingObjectForce);
-            
+
             // Set the rotation of the object to be the same as the player.
             heldObject.transform.rotation = transform.rotation;
         }
@@ -139,29 +140,28 @@ public class PlayerInteraction : MonoBehaviour
             Debug.Log("No object.");
             return;
         }
-        CrosshairInteractionAnimation(hit);
 
+        CrosshairInteractionAnimation(hit);
     }
-    
+
     // Updates the crosshair to tell the player whatever they're looking at is interactable.
     private void CrosshairInteractionAnimation(RaycastHit hit)
     {
-
         // If the player is not looking at an object with any of those two tags, or not even looking at an object at all, set the crosshair white and with no animation.
-        if (hit.transform == null || !hit.transform.CompareTag("Card") && !hit.transform.CompareTag("CanPickUp"))
+        if (hit.transform == null || (!hit.transform.CompareTag("Card") && !hit.transform.CompareTag("CanPickUp")))
         {
             crosshairAnimator.SetBool("Interacting", false);
             crosshairImage.color = Color.white;
             return;
         }
-        
+
         // Set the crosshair animation if the player is looking at a card and set the crosshair green.
         if (hit.transform.CompareTag("Card"))
         {
             crosshairAnimator.SetBool("Interacting", true);
             crosshairImage.color = Color.green;
         }
-        
+
         // Set the crosshair animation if the player is looking at an object that can be picked up and set the crosshair blue.
         if (hit.transform.CompareTag("CanPickUp"))
         {
