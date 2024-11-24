@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class CardManager : MonoBehaviour
@@ -34,6 +35,8 @@ public class CardManager : MonoBehaviour
     ///     Prefabs of the cards game objects.
     /// </summary>
     [SerializeField] private GameObject[] cards;
+
+    [SerializeField] private UnityEvent GameWon;
 
     #region Game Preparation
 
@@ -157,9 +160,19 @@ public class CardManager : MonoBehaviour
     // Checks if the game is won.
     private void CheckIfWon()
     {
-        if (correctGuessesCounter == cards.Length) Debug.Log("Game won.");
+        if (correctGuessesCounter == cards.Length)
+        {
+            CardGameWon();
+        }
     }
 
+    // The logic for winning the game goes here.
+    public void CardGameWon()
+    {
+        // Invoke the GameWon Unity Event.
+        GameWon.Invoke();
+    }
+    
     private IEnumerator ShuffleCardsPeriodically()
     {
         // The true condition can be changed to a timer if it gets implemented.

@@ -501,6 +501,9 @@ MonoBehaviour:
   - {fileID: 8654079642426452096, guid: 94c84a9b5e083454cb2eb8acdbb8ac0b, type: 3}
   - {fileID: 3801051410827128296, guid: 18aab0473d17557428c152dd04c41970, type: 3}
   - {fileID: 672854251957555514, guid: 4db86f6d562985c4285cb7bd9d0737b9, type: 3}
+  GameWon:
+    m_PersistentCalls:
+      m_Calls: []
   selectedCards: []
   isResetting: 0
 --- !u!4 &406901925
