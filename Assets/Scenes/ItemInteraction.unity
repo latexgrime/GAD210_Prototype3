@@ -1057,12 +1057,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120ea171d0b3cac44b1aa835924f82a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayCastDistance: 6
   crosshair: {fileID: 1120733874}
   pickUpObjectKeycode: 101
-  spherecastRadius: 1
-  objectDistance: 2
-  objectHeight: 0
+  objectInteractionDistance: 3
+  heldObjectPositionDistance: 2
+  heldObjectHeight: 0
   heldObject: {fileID: 0}
   movingObjectForce: 100
   heldObjectDragTarget: 35

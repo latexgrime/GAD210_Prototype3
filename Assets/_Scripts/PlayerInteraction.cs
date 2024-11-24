@@ -137,10 +137,8 @@ public class PlayerInteraction : MonoBehaviour
         {
             crosshairAnimator.SetBool("Interacting", false);
             crosshairImage.color = Color.white;
-            Debug.Log("No object.");
             return;
         }
-
         CrosshairInteractionAnimation(hit);
     }
 
