@@ -9,14 +9,16 @@ public class PlayerInteraction : MonoBehaviour
     private GameObject player;
     private CardManager cardManager;
 
-    [SerializeField] private float rayCastDistance;
+    [FormerlySerializedAs("rayCastDistance")]
+    [Header("- Crosshair settings")]
+    [SerializeField] private float rayCastCrosshairDistance;
     [SerializeField] private GameObject crosshair;
     private Animator crosshairAnimator;
     private Image crosshairImage;
 
     [Header("- Item interaction")] [SerializeField]
     private KeyCode pickUpObjectKeycode = KeyCode.E;
-    [SerializeField] private float spherecastRadius = 1f;
+    [SerializeField] private float objectInteractionDistance = 3f;
     [SerializeField] private float objectDistance = 2f;
     [SerializeField] private float objectHeight = 0f;
     [SerializeField] private GameObject heldObject;
@@ -48,7 +50,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
-        ObjectKindInteractionCheck();
+        CrosshairInteractionCheck();
+        CardInteractionChecker();
         PickUpOrDropObjectCheck();
     }
     
@@ -77,7 +80,7 @@ public class PlayerInteraction : MonoBehaviour
             // If there is no object that was picked up, and the player presses E...
             if (Input.GetKeyDown(pickUpObjectKeycode))
             {
-                RaycastHit[] hits = Physics.SphereCastAll(transform.position + transform.forward, spherecastRadius, transform.forward, spherecastRadius);
+                RaycastHit[] hits = Physics.SphereCastAll(transform.position + transform.forward, objectInteractionDistance, transform.forward, objectInteractionDistance);
                 var hitIndex = Array.FindIndex(hits, hit => hit.transform.tag == "CanPickUp");
 
                 if (hitIndex != -1)
@@ -92,6 +95,17 @@ public class PlayerInteraction : MonoBehaviour
                     heldObjectRb.useGravity = false;
                 }
             }
+        }
+    }
+
+    private void CardInteractionChecker()
+    {
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position + transform.forward, objectInteractionDistance, transform.forward, objectInteractionDistance);
+        var hitIndex = Array.FindIndex(hits, hit => hit.transform.tag == "Card");
+        if (hitIndex != -1)
+        {
+            HandleCardInteraction(hits[hitIndex]);
+
         }
     }
 
@@ -114,58 +128,43 @@ public class PlayerInteraction : MonoBehaviour
     }
 
     // Cast a ray to check if there is an interactable object in front.
-    private void ObjectKindInteractionCheck()
+    private void CrosshairInteractionCheck()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, rayCastDistance))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, rayCastCrosshairDistance))
         {
-            // If looking at a card.
-            if (hit.transform.CompareTag("Card"))
-            {
-                CrosshairInteractionAnimation(true, false);
-                HandleCardInteraction(hit);
-            }
-            
-            // If looking at a pickable object.
-            if (hit.transform.CompareTag("CanPickUp"))
-            {
-                CrosshairInteractionAnimation(false, true);
-            }
-            
-            // If the player is not pointing at a card and a pickable object, or is looking at nothing, then set the crosshair to white.
-            else if (!hit.transform.CompareTag("Card") && !hit.transform.CompareTag("CanPickUp") || hit.transform == null)
-            {
-                CrosshairInteractionAnimation(false, false);
-            }
+            CrosshairInteractionAnimation(hit);
         }
     }
     
     // Updates the crosshair to tell the player whatever they're looking at is interactable.
-    private void CrosshairInteractionAnimation(bool isInteractable, bool canPickUp)
+    private void CrosshairInteractionAnimation(RaycastHit hit)
     {
-        // Set the animation if the player is looking at an interactable object or an object they can pick up.
-        crosshairAnimator.SetBool("Interacting", isInteractable || canPickUp);
-
-
-        if (isInteractable)
+        var distance = hit.distance;
+        // Set the crosshair animation if the player is looking at a card and set the crosshair green.
+        if (hit.transform.CompareTag("Card") && distance <= objectInteractionDistance)
         {
             crosshairImage.color = Color.green;
+            crosshairAnimator.SetBool("Interacting", true);
             Debug.Log("Green");
         }
-
-        if (canPickUp)
+        
+        // Set the crosshair animation if the player is looking at an object that can be picked up and set the crosshair blue.
+        if (hit.transform.CompareTag("CanPickUp") && distance <= objectInteractionDistance)
         {
+            crosshairAnimator.SetBool("Interacting", true);
             crosshairImage.color = Color.blue;
             Debug.Log("Blue");
 
         }
-        else if (!isInteractable && !canPickUp)
+        
+        // If the player is not looking at an object with any of those two tags, or not even looking at an object at all, set the crosshair white and with no animation.
+        else if (!hit.transform.CompareTag("Card") && !hit.transform.CompareTag("CanPickUp") || hit.transform == null)
         {
+            crosshairAnimator.SetBool("Interacting", false);
             crosshairImage.color = Color.white;
             Debug.Log("White");
         }
-
-
     }
 
     // If the player clicks and the cards are not being reset, can flip the card the player is looking at.
