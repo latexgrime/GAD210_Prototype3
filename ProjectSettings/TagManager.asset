@@ -7,6 +7,7 @@ TagManager:
   - CameraHolder
   - Card
   - CanPickUp
+  - PlayerCollider
   layers:
   - Default
   - TransparentFX
