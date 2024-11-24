@@ -18,8 +18,9 @@ public class PlayerInteraction : MonoBehaviour
     [Header("- Item interaction")] [SerializeField]
     private KeyCode pickUpObjectKeycode = KeyCode.E;
     [SerializeField] private float objectInteractionDistance = 3f;
-    [SerializeField] private float objectDistance = 2f;
-    [SerializeField] private float objectHeight = 0f;
+    [SerializeField] private float objectInteractionRadius = 1f;
+    [FormerlySerializedAs("objectDistance")] [SerializeField] private float heldObjectPositionDistance = 2f;
+    [FormerlySerializedAs("objectHeight")] [SerializeField] private float heldObjectHeight = 0f;
     [SerializeField] private GameObject heldObject;
     /// <summary>
     /// The force intensity applied to the object when picked up.
@@ -79,7 +80,7 @@ public class PlayerInteraction : MonoBehaviour
             // If there is no object that was picked up, and the player presses E...
             if (Input.GetKeyDown(pickUpObjectKeycode))
             {
-                RaycastHit[] hits = Physics.SphereCastAll(transform.position + transform.forward, objectInteractionDistance, transform.forward, objectInteractionDistance);
+                RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward, objectInteractionDistance);
                 var hitIndex = Array.FindIndex(hits, hit => hit.transform.tag == "CanPickUp");
 
                 if (hitIndex != -1)
@@ -116,7 +117,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             Rigidbody heldObjectRb = heldObject.GetComponent<Rigidbody>();
             Vector3 moveObjectTo =
-                transform.position + objectDistance * transform.forward + objectHeight * transform.up;
+                transform.position + heldObjectPositionDistance * transform.forward + heldObjectHeight * transform.up;
             Vector3 positionDifference = moveObjectTo - heldObject.transform.position;
             
             // Set the position of the grabbed object to be in front of the player.
@@ -146,7 +147,7 @@ public class PlayerInteraction : MonoBehaviour
     private void CrosshairInteractionAnimation(RaycastHit hit)
     {
 
-        // If there is no object.
+        // If the player is not looking at an object with any of those two tags, or not even looking at an object at all, set the crosshair white and with no animation.
         if (hit.transform == null || !hit.transform.CompareTag("Card") && !hit.transform.CompareTag("CanPickUp"))
         {
             crosshairAnimator.SetBool("Interacting", false);
@@ -159,7 +160,6 @@ public class PlayerInteraction : MonoBehaviour
         {
             crosshairAnimator.SetBool("Interacting", true);
             crosshairImage.color = Color.green;
-
         }
         
         // Set the crosshair animation if the player is looking at an object that can be picked up and set the crosshair blue.
@@ -167,11 +167,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             crosshairAnimator.SetBool("Interacting", true);
             crosshairImage.color = Color.blue;
-
         }
-        
-        // If the player is not looking at an object with any of those two tags, or not even looking at an object at all, set the crosshair white and with no animation.
-
     }
 
     // If the player clicks and the cards are not being reset, can flip the card the player is looking at.
