@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GAD210.Leonardo.Player.Movement
@@ -7,7 +8,8 @@ namespace GAD210.Leonardo.Player.Movement
     /// </summary>
     public class PlayerMovement : MonoBehaviour
     {
-        [Header("Movement")] public float moveSpeed;
+        [Header("Movement")] 
+        private float moveSpeed;
 
         public float groundDrag;
 
@@ -16,14 +18,17 @@ namespace GAD210.Leonardo.Player.Movement
         public float airMultiplier;
         private bool readyToJump;
 
-        [HideInInspector] public float walkSpeed = 7f;
-        [HideInInspector] public float sprintSpeed = 14f;
+        [SerializeField] private float walkSpeed = 7f;
+        [SerializeField] private float sprintSpeed = 14f;
 
-        [Header("Keybindings")] public KeyCode jumpKey = KeyCode.Space;
+        [Header("Keybindings")] 
+        [SerializeField] private KeyCode jumpKey = KeyCode.Space;
+        [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
 
-        [Header("Ground Check")] public float playerHeight;
+        [Header("Ground Check")] 
+        public float playerHeight;
         public LayerMask whatIsGround;
-        private bool grounded;
+        [SerializeField] private bool grounded;
 
         public Transform orientation;
 
@@ -45,7 +50,7 @@ namespace GAD210.Leonardo.Player.Movement
         private void Update()
         {
             // Ground check.
-            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+                grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, whatIsGround);
 
             MyInput();
             SpeedControl();
@@ -75,6 +80,15 @@ namespace GAD210.Leonardo.Player.Movement
                 Jump();
 
                 Invoke(nameof(ResetJump), jumpCooldown);
+            }
+            
+            if (Input.GetKey(sprintKey))
+            {
+                moveSpeed = sprintSpeed;
+            }
+            else
+            {
+                moveSpeed = walkSpeed;
             }
         }
 

@@ -180,7 +180,27 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: jumpForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
       propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: walkSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: groundDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: sprintSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: airMultiplier
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -636,7 +656,7 @@ GameObject:
   - component: {fileID: 676387125}
   - component: {fileID: 676387124}
   - component: {fileID: 676387123}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
