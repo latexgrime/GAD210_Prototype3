@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CameraHolder
   - Card
+  - CanPickUp
   layers:
   - Default
   - TransparentFX
