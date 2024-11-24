@@ -1,5 +1,6 @@
 using System;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -8,10 +9,8 @@ public class PlayerInteraction : MonoBehaviour
 {
     private GameObject player;
     private CardManager cardManager;
-
-    [FormerlySerializedAs("rayCastDistance")]
+    
     [Header("- Crosshair settings")]
-    [SerializeField] private float rayCastCrosshairDistance;
     [SerializeField] private GameObject crosshair;
     private Animator crosshairAnimator;
     private Image crosshairImage;
@@ -100,12 +99,13 @@ public class PlayerInteraction : MonoBehaviour
 
     private void CardInteractionChecker()
     {
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position + transform.forward, objectInteractionDistance, transform.forward, objectInteractionDistance);
-        var hitIndex = Array.FindIndex(hits, hit => hit.transform.tag == "Card");
-        if (hitIndex != -1)
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, objectInteractionDistance))
         {
-            HandleCardInteraction(hits[hitIndex]);
-
+            if (hit.transform.CompareTag("Card"))
+            {
+                HandleCardInteraction(hit);
+            }
         }
     }
 
@@ -131,40 +131,47 @@ public class PlayerInteraction : MonoBehaviour
     private void CrosshairInteractionCheck()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, rayCastCrosshairDistance))
+        if (!Physics.Raycast(transform.position, transform.forward, out hit, objectInteractionDistance))
         {
-            CrosshairInteractionAnimation(hit);
+            crosshairAnimator.SetBool("Interacting", false);
+            crosshairImage.color = Color.white;
+            Debug.Log("No object.");
+            return;
         }
+        CrosshairInteractionAnimation(hit);
+
     }
     
     // Updates the crosshair to tell the player whatever they're looking at is interactable.
     private void CrosshairInteractionAnimation(RaycastHit hit)
     {
-        var distance = hit.distance;
-        // Set the crosshair animation if the player is looking at a card and set the crosshair green.
-        if (hit.transform.CompareTag("Card") && distance <= objectInteractionDistance)
+
+        // If there is no object.
+        if (hit.transform == null || !hit.transform.CompareTag("Card") && !hit.transform.CompareTag("CanPickUp"))
         {
-            crosshairImage.color = Color.green;
+            crosshairAnimator.SetBool("Interacting", false);
+            crosshairImage.color = Color.white;
+            return;
+        }
+        
+        // Set the crosshair animation if the player is looking at a card and set the crosshair green.
+        if (hit.transform.CompareTag("Card"))
+        {
             crosshairAnimator.SetBool("Interacting", true);
-            Debug.Log("Green");
+            crosshairImage.color = Color.green;
+
         }
         
         // Set the crosshair animation if the player is looking at an object that can be picked up and set the crosshair blue.
-        if (hit.transform.CompareTag("CanPickUp") && distance <= objectInteractionDistance)
+        if (hit.transform.CompareTag("CanPickUp"))
         {
             crosshairAnimator.SetBool("Interacting", true);
             crosshairImage.color = Color.blue;
-            Debug.Log("Blue");
 
         }
         
         // If the player is not looking at an object with any of those two tags, or not even looking at an object at all, set the crosshair white and with no animation.
-        else if (!hit.transform.CompareTag("Card") && !hit.transform.CompareTag("CanPickUp") || hit.transform == null)
-        {
-            crosshairAnimator.SetBool("Interacting", false);
-            crosshairImage.color = Color.white;
-            Debug.Log("White");
-        }
+
     }
 
     // If the player clicks and the cards are not being reset, can flip the card the player is looking at.
