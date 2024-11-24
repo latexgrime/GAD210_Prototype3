@@ -21,9 +21,14 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float heldObjectPositionDistance = 2f;
 
     [FormerlySerializedAs("objectHeight")] [SerializeField]
+    private GameObject heldObject;
+
+    private bool throwObject = false;
     private float heldObjectHeight;
 
-    [SerializeField] private GameObject heldObject;
+    [SerializeField]
+    private float launchForce = 100f;
+
 
     /// <summary>
     ///     The force intensity applied to the object when picked up.
@@ -79,6 +84,11 @@ public class PlayerInteraction : MonoBehaviour
                 heldObjectRb.useGravity = true;
                 heldObject = null;
             }
+            // If the player clicks.
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                throwObject = true;
+            }
         }
         else
         {
@@ -126,6 +136,15 @@ public class PlayerInteraction : MonoBehaviour
 
             // Set the rotation of the object to be the same as the player.
             heldObject.transform.rotation = transform.rotation;
+            
+            if (throwObject)
+            {
+                heldObjectRb.drag = heldObjectMainDrag;
+                heldObjectRb.useGravity = true;
+                heldObjectRb.AddForce(transform.forward * launchForce);
+                heldObject = null;
+                throwObject = !throwObject;
+            }
         }
     }
 
