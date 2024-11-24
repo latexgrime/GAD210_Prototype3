@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PlayerInteraction : MonoBehaviour
@@ -19,6 +20,16 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float objectDistance = 2f;
     [SerializeField] private float objectHeight = 0f;
     [SerializeField] private GameObject heldObject;
+    /// <summary>
+    /// The force intensity applied to the object when picked up.
+    /// </summary>
+    [SerializeField] private float movingObjectForce = 500f;
+    /// <summary>
+    /// Setting a large number for this so the amount of force applied when picking up an object doesn't break the immersion.
+    /// </summary>
+    [SerializeField] private float heldObjectDragTarget = 25f;
+
+    private float heldObjectMainDrag;
     
     private void Start()
     {
@@ -38,17 +49,26 @@ public class PlayerInteraction : MonoBehaviour
     private void Update()
     {
         CardInteractionCheck();
-
+        PickUpOrDropObjectCheck();
+    }
+    
+    private void FixedUpdate()
+    {
+        PickedUpObjectPhysics();
+    }
+    
+    private void PickUpOrDropObjectCheck()
+    {
+        // If the player is already holding an object.
         if (heldObject)
         {
-            // Set the position of the grabbed object to be in front of the player.
-            heldObject.transform.position = transform.position + objectDistance * transform.forward +
-                                            objectHeight * transform.up;
-            // Set the rotation of the object to be the same as the player.
-            heldObject.transform.rotation = transform.rotation;
-            
+            Rigidbody heldObjectRb = heldObject.GetComponent<Rigidbody>();
+            // Drop the object.
             if (Input.GetKeyDown(pickUpObjectKeycode))
             {
+                // Set the amount of drag the object initially had.
+                heldObjectRb.drag = heldObjectMainDrag;
+                heldObjectRb.useGravity = true;
                 heldObject = null;
             }
         }
@@ -64,10 +84,30 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     var hitObject = hits[hitIndex].transform.gameObject;
                     heldObject = hitObject;
+                    Rigidbody heldObjectRb = heldObject.GetComponent<Rigidbody>();
+                    // Save the original drag value the object had to apply it later when the player drops the object.
+                    heldObjectMainDrag = heldObjectRb.drag;
+                    // Set the drag to the drag target value. This is to fix the problem with the object receiving too much force when picked up.
+                    heldObjectRb.drag = heldObjectDragTarget;
+                    heldObjectRb.useGravity = false;
                 }
             }
         }
-        
+    }
+
+    private void PickedUpObjectPhysics()
+    {
+        // Get references.
+        Rigidbody heldObjectRb = heldObject.GetComponent<Rigidbody>();
+        Vector3 moveObjectTo =
+            transform.position + objectDistance * transform.forward + objectHeight * transform.up;
+        Vector3 positionDifference = moveObjectTo - heldObject.transform.position;
+            
+        // Set the position of the grabbed object to be in front of the player.
+        heldObjectRb.AddForce(positionDifference * movingObjectForce);
+            
+        // Set the rotation of the object to be the same as the player.
+        heldObject.transform.rotation = transform.rotation;
     }
 
     // Cast a ray to check if its hitting any cards and plays a crosshair animation if so.
