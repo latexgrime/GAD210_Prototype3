@@ -37,6 +37,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private GameObject[] cards;
 
     [SerializeField] private UnityEvent GameWon;
+    private bool gameWon;
 
     #region Game Preparation
 
@@ -48,7 +49,7 @@ public class CardManager : MonoBehaviour
         if (cardPositions.Length % 2 != 0 || cards.Length * 2 != cardPositions.Length)
             Debug.LogError(
                 "CardManager.cs: the length of the cardPositions array is not pair or the amount of the cards array is not half of the cardsPosition array.");
-
+        gameWon = false;
         DuplicateCards();
         ShuffleCards();
         InstantiateCardsInShuffledPosition();
@@ -170,13 +171,14 @@ public class CardManager : MonoBehaviour
     public void CardGameWon()
     {
         // Invoke the GameWon Unity Event.
+        gameWon = true;
         GameWon.Invoke();
     }
     
     private IEnumerator ShuffleCardsPeriodically()
     {
         // The true condition can be changed to a timer if it gets implemented.
-        while (true)
+        while (!gameWon)
         {
             // If two cards are being reset, wait until they're done resetting.
             yield return new WaitUntil(() => !isResetting);
