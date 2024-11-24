@@ -48,7 +48,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
-        CardInteractionCheck();
+        ObjectKindInteractionCheck();
         PickUpOrDropObjectCheck();
     }
     
@@ -97,45 +97,75 @@ public class PlayerInteraction : MonoBehaviour
 
     private void PickedUpObjectPhysics()
     {
-        // Get references.
-        Rigidbody heldObjectRb = heldObject.GetComponent<Rigidbody>();
-        Vector3 moveObjectTo =
-            transform.position + objectDistance * transform.forward + objectHeight * transform.up;
-        Vector3 positionDifference = moveObjectTo - heldObject.transform.position;
+        // If the player has an object picked up.
+        if (heldObject != null)
+        {
+            Rigidbody heldObjectRb = heldObject.GetComponent<Rigidbody>();
+            Vector3 moveObjectTo =
+                transform.position + objectDistance * transform.forward + objectHeight * transform.up;
+            Vector3 positionDifference = moveObjectTo - heldObject.transform.position;
             
-        // Set the position of the grabbed object to be in front of the player.
-        heldObjectRb.AddForce(positionDifference * movingObjectForce);
+            // Set the position of the grabbed object to be in front of the player.
+            heldObjectRb.AddForce(positionDifference * movingObjectForce);
             
-        // Set the rotation of the object to be the same as the player.
-        heldObject.transform.rotation = transform.rotation;
+            // Set the rotation of the object to be the same as the player.
+            heldObject.transform.rotation = transform.rotation;
+        }
     }
 
-    // Cast a ray to check if its hitting any cards and plays a crosshair animation if so.
-    private void CardInteractionCheck()
+    // Cast a ray to check if there is an interactable object in front.
+    private void ObjectKindInteractionCheck()
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, rayCastDistance))
         {
+            // If looking at a card.
             if (hit.transform.CompareTag("Card"))
             {
-                CrosshairInteractionAnimation(true);
+                CrosshairInteractionAnimation(true, false);
                 HandleCardInteraction(hit);
             }
-            else if (!hit.transform.CompareTag("Card") || hit.transform == null)
+            
+            // If looking at a pickable object.
+            if (hit.transform.CompareTag("CanPickUp"))
             {
-                CrosshairInteractionAnimation(false);
+                CrosshairInteractionAnimation(false, true);
+            }
+            
+            // If the player is not pointing at a card and a pickable object, or is looking at nothing, then set the crosshair to white.
+            else if (!hit.transform.CompareTag("Card") && !hit.transform.CompareTag("CanPickUp") || hit.transform == null)
+            {
+                CrosshairInteractionAnimation(false, false);
             }
         }
     }
-
+    
     // Updates the crosshair to tell the player whatever they're looking at is interactable.
-    private void CrosshairInteractionAnimation(bool isInteractable)
+    private void CrosshairInteractionAnimation(bool isInteractable, bool canPickUp)
     {
-        crosshairAnimator.SetBool("Interacting", isInteractable);
+        // Set the animation if the player is looking at an interactable object or an object they can pick up.
+        crosshairAnimator.SetBool("Interacting", isInteractable || canPickUp);
+
+
         if (isInteractable)
+        {
             crosshairImage.color = Color.green;
-        else
+            Debug.Log("Green");
+        }
+
+        if (canPickUp)
+        {
+            crosshairImage.color = Color.blue;
+            Debug.Log("Blue");
+
+        }
+        else if (!isInteractable && !canPickUp)
+        {
             crosshairImage.color = Color.white;
+            Debug.Log("White");
+        }
+
+
     }
 
     // If the player clicks and the cards are not being reset, can flip the card the player is looking at.
