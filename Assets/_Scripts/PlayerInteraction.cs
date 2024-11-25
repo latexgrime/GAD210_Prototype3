@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -37,7 +38,9 @@ public class PlayerInteraction : MonoBehaviour
     private float heldObjectMainDrag;
 
     [Header("- SFX")] [SerializeField] private AudioClip throwObjectSFX;
-
+    private float defaultVolume;
+    private float defaultPitch;
+    
     private void Start()
     {
         GetComponents();
@@ -52,6 +55,8 @@ public class PlayerInteraction : MonoBehaviour
         crosshairAnimator = crosshair.GetComponent<Animator>();
         crosshairImage = crosshair.GetComponent<Image>();
         crosshairImage.color = Color.white;
+        defaultVolume = audioSource.volume;
+        defaultPitch = audioSource.pitch;
     }
 
     private void Update()
@@ -140,6 +145,8 @@ public class PlayerInteraction : MonoBehaviour
                 heldObjectRb.AddForce(transform.forward * launchForce);
                 heldObject = null;
                 throwObject = !throwObject;
+                audioSource.pitch = Random.Range(defaultPitch - 0.1f, defaultPitch + 0.1f);
+                audioSource.volume = Random.Range(defaultVolume - 0.2f, defaultVolume + 0.2f);
                 audioSource.PlayOneShot(throwObjectSFX);
             }
         }
