@@ -30,7 +30,7 @@ namespace GAD210.Leonardo.Player.Movement
         public float playerHeight;
         public LayerMask whatIsGround;
         [SerializeField] private bool grounded;
-        private bool wasGrounded;
+        [SerializeField] private bool wasGrounded;
         public Transform orientation;
 
         [Header("SFX")] 
@@ -79,7 +79,13 @@ namespace GAD210.Leonardo.Player.Movement
                 rb.drag = groundDrag;
             else
                 rb.drag = 0;
-
+            
+            // Play the landing sfx once.
+            if (grounded && !wasGrounded)
+            {
+                audioSource.PlayOneShot(landSFX);
+            }
+            
             wasGrounded = grounded;
         }
 
@@ -87,11 +93,7 @@ namespace GAD210.Leonardo.Player.Movement
         {
             MovePlayer();
             
-            // Play the landing sfx once.
-            if (grounded && !wasGrounded)
-            {
-                audioSource.PlayOneShot(landSFX);
-            }
+
         }
 
         private void PlayerInput()
@@ -221,7 +223,6 @@ namespace GAD210.Leonardo.Player.Movement
 
         private void ResetJump()
         {
-            audioSource.PlayOneShot(landSFX);
             readyToJump = true;
         }
     }

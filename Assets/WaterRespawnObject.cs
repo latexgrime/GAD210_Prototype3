@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class WaterRespawnObject : MonoBehaviour
 {
-    private AudioSource audioSource;
+    private AudioSource portalAudioSource;
     
     [SerializeField] private GameObject respawnPoint;
     [SerializeField] private float returnTime;
     [SerializeField] private ParticleSystem respawnParticleSystem;
     [SerializeField] private AudioClip respawnSFX;
+    [SerializeField] private AudioClip waterSplashSFX;
     private bool wasMoved;
 
     private void Start()
     {
-        audioSource = respawnPoint.GetComponent<AudioSource>();
+        portalAudioSource = respawnPoint.GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,17 +32,20 @@ public class WaterRespawnObject : MonoBehaviour
 
     private IEnumerator MoveObject(Collider collidedObject)
     {
-        yield return new WaitForSeconds(returnTime);
         if (collidedObject.CompareTag("PlayerCollider"))
         {
+            collidedObject.transform.parent.GetComponent<AudioSource>().PlayOneShot(waterSplashSFX);
+            yield return new WaitForSeconds(returnTime);
             collidedObject.transform.parent.gameObject.transform.position = respawnPoint.transform.position;
         }
         else
         {
+            collidedObject.GetComponent<AudioSource>().PlayOneShot(waterSplashSFX);
+            yield return new WaitForSeconds(returnTime);
             collidedObject.transform.position = respawnPoint.transform.position;
         }
         respawnParticleSystem.Play();
-        audioSource.PlayOneShot(respawnSFX);
+        portalAudioSource.PlayOneShot(respawnSFX);
         wasMoved = false;
     }
 }
