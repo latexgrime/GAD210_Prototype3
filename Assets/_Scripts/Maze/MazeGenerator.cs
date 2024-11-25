@@ -13,12 +13,15 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] private int mazeDepth;
 
     private MazeCell[,] mazeGrid;
+
+    [SerializeField] private float cellSize;
     // Start is called before the first frame update
     void Start()
     {
         //transform.SetParent(mazeCellPrefab.transform);
         
         // Populate the maze
+
         mazeGrid = new MazeCell[mazeWidth, mazeDepth];
 
           for (int x = 0; x < mazeWidth; x++)
@@ -27,9 +30,9 @@ public class MazeGenerator : MonoBehaviour
             {
                 // Store the maze in an array
                 mazeGrid[x, z] = Instantiate(mazeCellPrefab, new Vector3(x, 0, z), Quaternion.identity);
+                //mazeGrid[x, z].transform.localScale = new Vector3(0.8f, 1f, 0.8f);
             }
         }
-
          GenerateMaze(null, mazeGrid[0, 115]);
     }
     
@@ -64,6 +67,7 @@ public class MazeGenerator : MonoBehaviour
     {
         int x = (int)currentCell.transform.position.x;
         int z = (int)currentCell.transform.position.z;
+        
 
         if (x + 1 < mazeWidth)
         {
@@ -95,7 +99,7 @@ public class MazeGenerator : MonoBehaviour
             }
         }
         
-        if (z - 1 > mazeDepth)
+        if (z - 1 >= 115)
         {
             var cellToBack = mazeGrid[x, z - 1];
 
