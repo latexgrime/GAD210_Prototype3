@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GAD210.Leonardo.Player.Movement
 {
@@ -15,6 +17,7 @@ namespace GAD210.Leonardo.Player.Movement
         public float jumpCooldown;
         public float airMultiplier;
         private bool readyToJump;
+        private bool isRunning = false;
 
         [SerializeField] private float walkSpeed = 7f;
         [SerializeField] private float sprintSpeed = 14f;
@@ -33,10 +36,19 @@ namespace GAD210.Leonardo.Player.Movement
         [Header("SFX")] 
         private AudioSource audioSource;
 
-        [SerializeField] private AudioClip walkingInSandSFX;
-        [SerializeField] private AudioClip walkingInWaterSFX;
-        [SerializeField] private AudioClip landingSFX;
-        [SerializeField] private AudioClip jumpingSFX;
+        [SerializeField] private AudioClip walkInSandSFX;
+        [SerializeField] private AudioClip walkInWaterSFX;
+        [SerializeField] private AudioClip walkInWoodSFX;
+        [SerializeField] private AudioClip walkInRockSFX;
+        [SerializeField] private AudioClip landSFX;
+        [SerializeField] private AudioClip jumpSFX;
+        
+        /// <summary>
+        /// The amount of time that needs to happen before a step sound can be played again.
+        /// </summary>
+        [SerializeField] private float stepIntervalForWalkSFX;
+        [SerializeField] private float stepIntervalForRunSFX;
+        private float stepTimer;
             
         private float horizontalInput;
         private float verticalInput;
@@ -59,7 +71,7 @@ namespace GAD210.Leonardo.Player.Movement
             // Ground check.
                 grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 1.1f, whatIsGround);
                 
-            MyInput();
+            PlayerInput();
             SpeedControl();
 
             // Handle drag.
@@ -78,11 +90,11 @@ namespace GAD210.Leonardo.Player.Movement
             // Play the landing sfx once.
             if (grounded && !wasGrounded)
             {
-                audioSource.PlayOneShot(landingSFX);
+                audioSource.PlayOneShot(landSFX);
             }
         }
 
-        private void MyInput()
+        private void PlayerInput()
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
             verticalInput = Input.GetAxisRaw("Vertical");
@@ -100,11 +112,75 @@ namespace GAD210.Leonardo.Player.Movement
             if (Input.GetKey(sprintKey))
             {
                 moveSpeed = sprintSpeed;
+                isRunning = true;
             }
             else
             {
                 moveSpeed = walkSpeed;
+                isRunning = false;
             }
+
+            PlayWalkingSFX();
+        }
+
+        
+        private void PlayWalkingSFX()
+        {
+            bool isMoving = horizontalInput != 0 || verticalInput != 0;
+            if (grounded && isMoving)
+            {
+                stepTimer += Time.deltaTime;
+                
+                float currentStepIntervalSFX;
+                if (isRunning)
+                {
+                    currentStepIntervalSFX = stepIntervalForRunSFX;
+                }
+                else
+                {
+                    currentStepIntervalSFX = stepIntervalForWalkSFX;
+                }
+                
+                if (stepTimer >= currentStepIntervalSFX)
+                {
+                    audioSource.pitch = Random.Range(0.9f, 1.1f);
+                    audioSource.volume = Random.Range(0.8f, 1.2f);
+
+                    AudioClip surfaceSFX = GetSurfaceStepSFX();
+                    audioSource.PlayOneShot(surfaceSFX);
+                    stepTimer = 0f;
+                }
+            }
+            else
+            {
+                stepTimer = 0f;
+                audioSource.pitch = 1;
+                audioSource.volume = 1;
+            }
+        }
+
+        private AudioClip GetSurfaceStepSFX()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, playerHeight * 1.1f, whatIsGround))
+            {
+                string surfaceTag = hit.transform.tag;
+
+                switch (surfaceTag)
+                {
+                    case "Sand":
+                        return walkInSandSFX;
+                    case "Wood":
+                        return walkInWoodSFX;
+                    case "Water":
+                        return walkInWaterSFX;
+                    case "Rock":
+                        return walkInRockSFX;
+                }
+            }
+
+            // If there is nothing just default to sand lol.
+            return walkInSandSFX;
         }
 
         private void MovePlayer()
@@ -140,12 +216,12 @@ namespace GAD210.Leonardo.Player.Movement
 
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
             
-            audioSource.PlayOneShot(jumpingSFX);
+            audioSource.PlayOneShot(jumpSFX);
         }
 
         private void ResetJump()
         {
-            audioSource.PlayOneShot(landingSFX);
+            audioSource.PlayOneShot(landSFX);
             readyToJump = true;
         }
     }

@@ -319,6 +319,14 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: jumpSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 605e8c16b79d4ed4ebdf6d7b5fe68a06, type: 3}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: landSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: ec668c91817301d43ba51e11cc0c275b, type: 3}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
       propertyPath: jumpForce
       value: 5
       objectReference: {fileID: 0}
@@ -351,13 +359,41 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: walkInRockSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: aed94640df2e9e24e8d6c19d68f986cb, type: 3}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: walkInSandSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: fd63b41e73f9d614a9108fec81f1faca, type: 3}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: walkInWoodSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: b14fdf56c82861f4797b00223f7c7e73, type: 3}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: walkInWaterSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 36918b4281d0c2247875b867baf758ce, type: 3}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
       propertyPath: walkingInSandSFX
       value: 
-      objectReference: {fileID: 8300000, guid: a316cb69bcb626247af076e85c2cb590, type: 3}
+      objectReference: {fileID: 8300000, guid: fd63b41e73f9d614a9108fec81f1faca, type: 3}
     - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
       propertyPath: walkingInWaterSFX
       value: 
       objectReference: {fileID: 8300000, guid: 36918b4281d0c2247875b867baf758ce, type: 3}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: stepIntervalForSFX
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: stepIntervalForRunSFX
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
+      propertyPath: stepIntervalForWalkSFX
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 8625805600974615566, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
       propertyPath: walkingInSandSFX.Array.size
       value: 0
@@ -452,6 +488,10 @@ PrefabInstance:
     - target: {fileID: 154160, guid: d1f03074e612bbd4b84736d2d7aee882, type: 3}
       propertyPath: m_Layer
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 154160, guid: d1f03074e612bbd4b84736d2d7aee882, type: 3}
+      propertyPath: m_TagString
+      value: Water
       objectReference: {fileID: 0}
     - target: {fileID: 436524, guid: d1f03074e612bbd4b84736d2d7aee882, type: 3}
       propertyPath: m_RootOrder
@@ -562,6 +602,10 @@ PrefabInstance:
     - target: {fileID: 1220206043906976, guid: 86263e8355f96ba4ab9fdf4e96c2090f, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220206043906976, guid: 86263e8355f96ba4ab9fdf4e96c2090f, type: 3}
+      propertyPath: m_TagString
+      value: Rock
       objectReference: {fileID: 0}
     - target: {fileID: 4023013654594124, guid: 86263e8355f96ba4ab9fdf4e96c2090f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -702,6 +746,10 @@ PrefabInstance:
     - target: {fileID: 3912398021388012876, guid: 6a911bcf74902ee4f84cbd46fc971cc0, type: 3}
       propertyPath: m_Name
       value: DockPivot(2-3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3912398021388012876, guid: 6a911bcf74902ee4f84cbd46fc971cc0, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 8383244611573913129, guid: 6a911bcf74902ee4f84cbd46fc971cc0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2520,7 +2568,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1411155721702158440, guid: 6a911bcf74902ee4f84cbd46fc971cc0, type: 3}
       propertyPath: m_Layer
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3912398021388012876, guid: 6a911bcf74902ee4f84cbd46fc971cc0, type: 3}
       propertyPath: m_Name
@@ -2528,7 +2576,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3912398021388012876, guid: 6a911bcf74902ee4f84cbd46fc971cc0, type: 3}
       propertyPath: m_Layer
-      value: 4
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3912398021388012876, guid: 6a911bcf74902ee4f84cbd46fc971cc0, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 8383244611573913129, guid: 6a911bcf74902ee4f84cbd46fc971cc0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3655,6 +3707,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1128399435428950, guid: 94a3318e328358d4095f16b054b14180, type: 3}
+      propertyPath: m_TagString
+      value: Rock
+      objectReference: {fileID: 0}
     - target: {fileID: 4776272554816088, guid: 94a3318e328358d4095f16b054b14180, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.7
@@ -3804,6 +3860,10 @@ PrefabInstance:
     - target: {fileID: 1562119382739742, guid: c07f24e35f07ce74ba43afa35d48adf7, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1562119382739742, guid: c07f24e35f07ce74ba43afa35d48adf7, type: 3}
+      propertyPath: m_TagString
+      value: Rock
       objectReference: {fileID: 0}
     - target: {fileID: 4243724423293762, guid: c07f24e35f07ce74ba43afa35d48adf7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4084,6 +4144,10 @@ PrefabInstance:
     - target: {fileID: 1957529895149934, guid: 5c11b6a454fa5fd458d541957f1de507, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1957529895149934, guid: 5c11b6a454fa5fd458d541957f1de507, type: 3}
+      propertyPath: m_TagString
+      value: Rock
       objectReference: {fileID: 0}
     - target: {fileID: 4868598521721778, guid: 5c11b6a454fa5fd458d541957f1de507, type: 3}
       propertyPath: m_LocalPosition.x
