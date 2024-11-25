@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ public class PlayerInteraction : MonoBehaviour
 {
     private GameObject player;
     private CardManager cardManager;
+    private AudioSource audioSource;
 
     [Header("- Crosshair settings")] [SerializeField]
     private GameObject crosshair;
@@ -14,34 +16,27 @@ public class PlayerInteraction : MonoBehaviour
     private Animator crosshairAnimator;
     private Image crosshairImage;
 
-    [Header("- Item interaction")] [SerializeField]
-    private KeyCode pickUpObjectKeycode = KeyCode.E;
-
+    [Header("- Item interaction")] 
+    [SerializeField] private float launchForce = 25f;
+    [SerializeField] private KeyCode pickUpObjectKeycode = KeyCode.E;
     [SerializeField] private float objectInteractionDistance = 3f; 
     [SerializeField] private float heldObjectPositionDistance = 2f;
-
-    [FormerlySerializedAs("objectHeight")] [SerializeField]
-    private GameObject heldObject;
-
-    private bool throwObject = false;
-    private float heldObjectHeight;
-
-    [SerializeField]
-    private float launchForce = 100f;
-
-
     /// <summary>
     ///     The force intensity applied to the object when picked up.
     /// </summary>
     [SerializeField] private float movingObjectForce = 500f;
-
     /// <summary>
     ///     Setting a large number for this so the amount of force applied when picking up an object doesn't break the
     ///     immersion.
     /// </summary>
     [SerializeField] private float heldObjectDragTarget = 25f;
-
+    
+    private bool throwObject = false;
+    private GameObject heldObject;
+    private float heldObjectHeight;
     private float heldObjectMainDrag;
+
+    [Header("- SFX")] [SerializeField] private AudioClip throwObjectSFX;
 
     private void Start()
     {
@@ -51,6 +46,7 @@ public class PlayerInteraction : MonoBehaviour
     // Get the required components.
     private void GetComponents()
     {
+        audioSource = GetComponent<AudioSource>();
         player = GameObject.FindGameObjectWithTag("Player");
         cardManager = FindObjectOfType<CardManager>();
         crosshairAnimator = crosshair.GetComponent<Animator>();
@@ -144,6 +140,7 @@ public class PlayerInteraction : MonoBehaviour
                 heldObjectRb.AddForce(transform.forward * launchForce);
                 heldObject = null;
                 throwObject = !throwObject;
+                audioSource.PlayOneShot(throwObjectSFX);
             }
         }
     }
