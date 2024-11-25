@@ -17,24 +17,20 @@ public class MazeCell : MonoBehaviour
     public void ClearLeftWall()
     {
         leftWall.SetActive(false);
-        leftWall.transform.localScale = new Vector3(10f, 1f, 2.2f);
     }
 
     public void ClearRightWall()
     {
         rightWall.SetActive(false);
-        rightWall.transform.localScale = new Vector3(10f, 1f, 2.2f);
     }
     
     public void ClearFrontWall()
     {
         frontWall.SetActive(false);
-        frontWall.transform.localScale = new Vector3(10f, 1f, 2.2f);
     }
 
     public void ClearBackWall()
     {
         backWall.SetActive(false);
-        backWall.transform.localScale = new Vector3(10f, 1f, 2.2f);
     }
 }

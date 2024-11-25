@@ -12,6 +12,8 @@ public class MazeGenerator : MonoBehaviour
 
     [SerializeField] private int mazeDepth;
 
+    [SerializeField] private GameObject solveMazeCube;
+
     private MazeCell[,] mazeGrid;
 
     [SerializeField] private float cellSize;
