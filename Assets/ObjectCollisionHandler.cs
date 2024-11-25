@@ -29,7 +29,6 @@ public class ObjectCollisionHandler : MonoBehaviour
 
     private void PlayCollisionSFX()
     {
-        Debug.Log("Playing collision sfx.");
         audioSource.pitch = Random.Range(defaultPitch - 0.1f, defaultPitch + 0.1f);
         audioSource.volume = Random.Range(defaultVolume - 0.2f, defaultVolume + 0.2f);
         audioSource.PlayOneShot(collisionSFX);
