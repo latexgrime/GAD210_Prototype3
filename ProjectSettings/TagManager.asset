@@ -12,6 +12,7 @@ TagManager:
   - Wood
   - Rock
   - Water
+  - Maze
   layers:
   - Default
   - TransparentFX
