@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using GAD210.Leonardo.Player.Movement;
 using UnityEngine;
 
 public class WaterRespawnObject : MonoBehaviour
@@ -9,6 +10,7 @@ public class WaterRespawnObject : MonoBehaviour
     [SerializeField] private GameObject respawnPoint;
     [SerializeField] private float returnTime;
     [SerializeField] private ParticleSystem respawnParticleSystem;
+    [SerializeField] private ParticleSystem waterSplashParticleSystem;
     [SerializeField] private AudioClip respawnSFX;
     [SerializeField] private AudioClip waterSplashSFX;
     private bool wasMoved;
@@ -34,13 +36,25 @@ public class WaterRespawnObject : MonoBehaviour
     {
         if (collidedObject.CompareTag("PlayerCollider"))
         {
+            // Play the SFX and the particle system.
             collidedObject.transform.parent.GetComponent<AudioSource>().PlayOneShot(waterSplashSFX);
+            waterSplashParticleSystem.gameObject.transform.position = collidedObject.transform.position;
+            waterSplashParticleSystem.Play();
+            
+            // Make the player "floaty"
+            var parent = collidedObject.transform.parent;
+            parent.GetComponent<PlayerMovement>().groundDrag = 20;
+            
+            // Teleport the player
             yield return new WaitForSeconds(returnTime);
-            collidedObject.transform.parent.gameObject.transform.position = respawnPoint.transform.position;
+            parent.gameObject.transform.position = respawnPoint.transform.position;
+            parent.GetComponent<PlayerMovement>().groundDrag = 1;
         }
         else
         {
             collidedObject.GetComponent<AudioSource>().PlayOneShot(waterSplashSFX);
+            waterSplashParticleSystem.gameObject.transform.position = collidedObject.transform.position;
+            waterSplashParticleSystem.Play();
             yield return new WaitForSeconds(returnTime);
             collidedObject.transform.position = respawnPoint.transform.position;
         }
