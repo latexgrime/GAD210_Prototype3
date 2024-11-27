@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7964816941025697332}
   - component: {fileID: 8493930098332209609}
   - component: {fileID: 6413960965151324841}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PickableObject
   m_TagString: CanPickUp
   m_Icon: {fileID: 0}
@@ -244,4 +244,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionSFX: {fileID: 8300000, guid: 6dcf6d6002f79504cb7a7ee8c715038f, type: 3}
-  collisionVelocityThreshold: 5
+  collisionVelocityThreshold: 1
