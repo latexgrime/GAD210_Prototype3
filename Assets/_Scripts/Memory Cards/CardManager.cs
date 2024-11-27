@@ -170,9 +170,12 @@ public class CardManager : MonoBehaviour
     // The logic for winning the game goes here.
     public void CardGameWon()
     {
-        // Invoke the GameWon Unity Event.
-        gameWon = true;
-        GameWon.Invoke();
+        if (!gameWon)
+        {
+            // Invoke the GameWon Unity Event once.
+            gameWon = true;
+            GameWon.Invoke();
+        }
     }
     
     private IEnumerator ShuffleCardsPeriodically()
