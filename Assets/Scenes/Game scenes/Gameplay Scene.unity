@@ -1200,7 +1200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazeCellPrefab: {fileID: 8850082674720876321, guid: c97befe72a76f7043827c58e0d419012, type: 3}
   mazeWidth: 15
-  mazeDepth: 135
+  mazeDepth: 125
   solveMazeCube: {fileID: 8841592134829561123, guid: 48036090dd04657408bd731f51e6017b, type: 3}
   cellSize: 0.5
 --- !u!4 &523672091
