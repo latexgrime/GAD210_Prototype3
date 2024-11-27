@@ -6403,6 +6403,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickableObject
       objectReference: {fileID: 0}
+    - target: {fileID: 3431082040678719261, guid: 32ad71ebb4a50c64581829fe38ce5f09, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6413960965151324841, guid: 32ad71ebb4a50c64581829fe38ce5f09, type: 3}
       propertyPath: collisionVelocityThreshold
       value: 1
