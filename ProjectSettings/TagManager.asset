@@ -8,6 +8,11 @@ TagManager:
   - Card
   - CanPickUp
   - PlayerCollider
+  - Sand
+  - Wood
+  - Rock
+  - Water
+  - Maze
   layers:
   - Default
   - TransparentFX
