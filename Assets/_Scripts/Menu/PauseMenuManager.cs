@@ -9,6 +9,11 @@ public class PauseMenuManager : MonoBehaviour
 
     private bool isPaused = false;
 
+    private void Start()
+    {
+        SetCursorLock(true);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -25,6 +30,7 @@ public class PauseMenuManager : MonoBehaviour
         pauseMenu.SetActive(true); 
         Time.timeScale = 0f;       
         isPaused = true;
+        SetCursorLock(false);
     }
 
     public void ResumeGame()
@@ -32,11 +38,27 @@ public class PauseMenuManager : MonoBehaviour
         pauseMenu.SetActive(false); 
         Time.timeScale = 1f;        
         isPaused = false;
+        SetCursorLock(true);
     }
 
     public void QuitToMainMenu()
     {
         Time.timeScale = 1f;        
-        SceneManager.LoadScene("MainMenu"); 
+        SceneManager.LoadScene(0); 
+    }
+
+    public void SetCursorLock(bool locked)
+    {
+        if (locked == true)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else if(locked == false)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        
     }
 }
