@@ -13,6 +13,7 @@ TagManager:
   - Rock
   - Water
   - Maze
+  - Entrance
   layers:
   - Default
   - TransparentFX
