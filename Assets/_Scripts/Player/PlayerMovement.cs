@@ -98,18 +98,18 @@ namespace GAD210.Leonardo.Player.Movement
 
         }
 
+        private bool isJumping = false;
         private void PlayerInput()
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
             verticalInput = Input.GetAxisRaw("Vertical");
 
             // Can jump.
-            if (Input.GetKeyDown(jumpKey) && readyToJump && grounded)
+            if (Input.GetKeyDown(jumpKey) && readyToJump && grounded && !isJumping)
             {
                 readyToJump = false;
-
+                isJumping = true;
                 Jump();
-
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
             
@@ -226,6 +226,7 @@ namespace GAD210.Leonardo.Player.Movement
         private void ResetJump()
         {
             readyToJump = true;
+            isJumping = false;
         }
     }
 }
