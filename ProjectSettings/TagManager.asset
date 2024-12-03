@@ -14,8 +14,6 @@ TagManager:
   - Water
   - Maze
   - Entrance
-  - Target
-  - EndGame
   layers:
   - Default
   - TransparentFX
