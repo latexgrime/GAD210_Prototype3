@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -30,6 +32,8 @@ namespace _Scripts.Player
         ///     immersion.
         /// </summary>
         [SerializeField] private float heldObjectDragTarget = 25f;
+
+        [SerializeField] private UnityEvent endGameEvent;
     
         private GameObject _heldObject;
         private float _heldObjectHeight;
@@ -125,9 +129,9 @@ namespace _Scripts.Player
                 if (hit.transform.CompareTag("Card"))
                     HandleCardInteraction(hit);
                 
-                else if (hit.transform.CompareTag("EndGame"))
+                else if (hit.transform.CompareTag("EndGame") && Input.GetKey(KeyCode.Mouse0))
                 {
-                    SceneManagement.LoadNextScene();
+                    endGameEvent.Invoke();
                 }
         }
 
@@ -178,7 +182,7 @@ namespace _Scripts.Player
         private void CrosshairInteractionAnimation(RaycastHit hit)
         {
             // If the player is not looking at an object with any of those two tags, or not even looking at an object at all, set the crosshair white and with no animation.
-            if (hit.transform == null || (!hit.transform.CompareTag("Card") && !hit.transform.CompareTag("CanPickUp")))
+            if (hit.transform == null || (!hit.transform.CompareTag("Card") && !hit.transform.CompareTag("CanPickUp") && (!hit.transform.CompareTag("EndGame"))))
             {
                 _crosshairAnimator.SetBool("Interacting", false);
                 _crosshairImage.color = Color.white;
@@ -186,7 +190,7 @@ namespace _Scripts.Player
             }
 
             // Set the crosshair animation if the player is looking at a card and set the crosshair green.
-            if (hit.transform.CompareTag("Card"))
+            if (hit.transform.CompareTag("Card") || hit.transform.CompareTag("EndGame"))
             {
                 _crosshairAnimator.SetBool("Interacting", true);
                 _crosshairImage.color = Color.green;

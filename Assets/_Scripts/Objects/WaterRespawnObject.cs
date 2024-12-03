@@ -65,25 +65,22 @@ public class WaterRespawnObject : MonoBehaviour
 
         if (collidedObject.CompareTag("PlayerCollider"))
         {
-            Transform parent = collidedObject.transform.parent;
-            if (parent != null)
-            {
-                if (parent.TryGetComponent(out AudioSource playerAudio))
-                {
-                    playerAudio.PlayOneShot(waterSplashSfx);
-                }
+            // Play the SFX and the particle system.
+            collidedObject.transform.parent.GetComponent<AudioSource>().PlayOneShot(waterSplashSfx);
+            waterSplashParticleSystem.gameObject.transform.position = collidedObject.transform.position;
+            waterSplashParticleSystem.Play();
 
-                if (parent.TryGetComponent(out PlayerMovement playerMovement))
-                {
-                    // Make the player floaty.
-                    playerMovement.groundDrag = 20;
+            // Make the player "floaty".
+            var parent = collidedObject.transform.parent;
+            parent.GetComponent<PlayerMovement>().groundDrag = 20;
 
-                    // Teleport the player.
-                    yield return new WaitForSeconds(respawnTime);
-                    parent.position = respawnPoint.transform.position;
-                    playerMovement.groundDrag = 1;
-                }
-            }
+            // Wait a moment to show floaty effect.
+            yield return new WaitForSeconds(respawnTime);
+        
+            // Reset player position AND drag at the same time.
+            parent.gameObject.transform.position = respawnPoint.transform.position;
+            
+            parent.GetComponent<PlayerMovement>().groundDrag = parent.GetComponent<PlayerMovement>().defaultDrag;
         }
         else
         {
