@@ -533,11 +533,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1628928532243125579, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.04
+      value: 13.1
       objectReference: {fileID: 0}
     - target: {fileID: 1628928532243125579, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -120
+      value: -105.2
       objectReference: {fileID: 0}
     - target: {fileID: 1628928532243125579, guid: 53a82b4acdac53e459aed457c1ff29b8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3801,7 +3801,7 @@ GameObject:
   - component: {fileID: 940404881}
   - component: {fileID: 940404880}
   m_Layer: 0
-  m_Name: Island3RespawnTrigger (1)
+  m_Name: Island4RespawnTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3846,7 +3846,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6967,7 +6967,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7131,11 +7131,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5502095864098659077, guid: 2b7c844be61e3aa4397caeeb1495f65c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.31
+      value: 13.370001
       objectReference: {fileID: 0}
     - target: {fileID: 5502095864098659077, guid: 2b7c844be61e3aa4397caeeb1495f65c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -119.96999
+      value: -105.16998
       objectReference: {fileID: 0}
     - target: {fileID: 5502095864098659077, guid: 2b7c844be61e3aa4397caeeb1495f65c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7844,7 +7844,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
