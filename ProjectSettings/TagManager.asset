@@ -15,6 +15,7 @@ TagManager:
   - Maze
   - Entrance
   - Target
+  - EndGame
   layers:
   - Default
   - TransparentFX
