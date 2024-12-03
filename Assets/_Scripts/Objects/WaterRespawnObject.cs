@@ -30,8 +30,7 @@ public class WaterRespawnObject : MonoBehaviour
     {
         if ((other.CompareTag("PlayerCollider") || other.CompareTag("CanPickUp")) && !_wasMoved)
         {
-            _wasMoved = true;
-            StartCoroutine(MoveObject(other));
+            StartCoroutine(TeleportObject(other));
         }
     }
 
@@ -51,18 +50,8 @@ public class WaterRespawnObject : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveObject(Collider collidedObject)
+    private IEnumerator TeleportObject(Collider collidedObject)
     {
-        if (collidedObject == null) yield break;
-
-        Vector3 collisionPosition = collidedObject.transform.position;
-        
-        if (waterSplashParticleSystem != null)
-        {
-            waterSplashParticleSystem.gameObject.transform.position = collisionPosition;
-            waterSplashParticleSystem.Play();
-        }
-
         if (collidedObject.CompareTag("PlayerCollider"))
         {
             // Play the SFX and the particle system.
@@ -70,39 +59,25 @@ public class WaterRespawnObject : MonoBehaviour
             waterSplashParticleSystem.gameObject.transform.position = collidedObject.transform.position;
             waterSplashParticleSystem.Play();
 
-            // Make the player "floaty".
+            // Make the player "floaty"
             var parent = collidedObject.transform.parent;
             parent.GetComponent<PlayerMovement>().groundDrag = 20;
 
-            // Wait a moment to show floaty effect.
+            // Teleport the player
             yield return new WaitForSeconds(respawnTime);
-        
-            // Reset player position AND drag at the same time.
             parent.gameObject.transform.position = respawnPoint.transform.position;
-            
             parent.GetComponent<PlayerMovement>().groundDrag = parent.GetComponent<PlayerMovement>().defaultDrag;
         }
         else
         {
-            if (collidedObject.TryGetComponent(out AudioSource objectAudio))
-            {
-                objectAudio.PlayOneShot(waterSplashSfx);
-            }
-
+            collidedObject.GetComponent<AudioSource>().PlayOneShot(waterSplashSfx);
+            waterSplashParticleSystem.gameObject.transform.position = collidedObject.transform.position;
+            waterSplashParticleSystem.Play();
             yield return new WaitForSeconds(respawnTime);
             collidedObject.transform.position = respawnPoint.transform.position;
         }
-        
-        if (respawnParticleSystem != null)
-        {
-            respawnParticleSystem.Play();
-        }
 
-        if (_portalAudioSource != null && respawnSfx != null)
-        {
-            _portalAudioSource.PlayOneShot(respawnSfx);
-        }
-
-        _wasMoved = false;
+        respawnParticleSystem.Play();
+        _portalAudioSource.PlayOneShot(respawnSfx);
     }
 }

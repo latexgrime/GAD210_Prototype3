@@ -104,7 +104,7 @@ namespace GAD210.Leonardo.Player.Movement
             verticalInput = Input.GetAxisRaw("Vertical");
 
             // Can jump.
-            if (Input.GetKey(jumpKey) && readyToJump && grounded)
+            if (Input.GetKeyDown(jumpKey) && readyToJump && grounded)
             {
                 readyToJump = false;
 

@@ -66,12 +66,6 @@ namespace _Scripts.Player
             CrosshairInteractionCheck();
             InteractionChecker();
             PickUpOrDropObjectCheck();
-            EndGameInteractionChecker();
-        }
-
-        private void EndGameInteractionChecker()
-        {
-            
         }
 
         private void FixedUpdate()
