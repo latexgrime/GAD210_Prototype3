@@ -13,6 +13,7 @@ namespace GAD210.Leonardo.Player.Movement
         [Header("Movement")] 
         private float moveSpeed;
         public float groundDrag;
+        public float defaultDrag;
         public float jumpForce;
         public float jumpCooldown;
         public float airMultiplier;
@@ -63,6 +64,7 @@ namespace GAD210.Leonardo.Player.Movement
             rb.freezeRotation = true;
             audioSource = GetComponent<AudioSource>();
 
+            defaultDrag = groundDrag;
             readyToJump = true;
         }
 

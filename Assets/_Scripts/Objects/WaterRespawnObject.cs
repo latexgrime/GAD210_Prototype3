@@ -5,14 +5,6 @@ using UnityEngine;
 public class WaterRespawnObject : MonoBehaviour
 {
     private AudioSource _portalAudioSource;
-
-    public enum Checkpoints
-    {
-        Island1 = 0,
-        Island2 = 1,
-        Island3 = 2
-    }
-
     [SerializeField] private Transform[] respawnPositions;
     [SerializeField] private GameObject respawnPoint;
     [SerializeField] private float respawnTime;
@@ -24,32 +16,53 @@ public class WaterRespawnObject : MonoBehaviour
 
     private void Start()
     {
-        _portalAudioSource = respawnPoint.GetComponent<AudioSource>();
-        respawnPoint.transform.position = respawnPositions[0].position;
+        if (respawnPoint.TryGetComponent(out AudioSource audioSource))
+        {
+            _portalAudioSource = audioSource;
+        }
+        if (respawnPositions.Length > 0)
+        {
+            respawnPoint.transform.position = respawnPositions[0].position;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerCollider") || other.CompareTag("CanPickUp"))
-            if (!_wasMoved)
-            {
-                _wasMoved = true;
-                StartCoroutine(MoveObject(other));
-            }
+        if ((other.CompareTag("PlayerCollider") || other.CompareTag("CanPickUp")) && !_wasMoved)
+        {
+            _wasMoved = true;
+            StartCoroutine(MoveObject(other));
+        }
     }
 
     public void SetIslandCheckpoint(int islandNumber)
     {
-        SetNewCheckpointPosition(islandNumber - 1);
+        if (islandNumber >= 0 && islandNumber < respawnPositions.Length)
+        {
+            SetNewCheckpointPosition(islandNumber);
+        }
     }
 
     private void SetNewCheckpointPosition(int checkpointNumber)
     {
-        respawnPoint.transform.position = respawnPositions[checkpointNumber].position;
+        if (checkpointNumber >= 0 && checkpointNumber < respawnPositions.Length)
+        {
+            respawnPoint.transform.position = respawnPositions[checkpointNumber].position;
+        }
     }
 
     private IEnumerator MoveObject(Collider collidedObject)
     {
+        if (collidedObject == null) yield break;
+
+        Vector3 collisionPosition = collidedObject.transform.position;
+        
+        if (waterSplashParticleSystem != null)
+        {
+            waterSplashParticleSystem.gameObject.transform.position = collisionPosition;
+            waterSplashParticleSystem.Play();
+        }
+
         if (collidedObject.CompareTag("PlayerCollider"))
         {
             // Play the SFX and the particle system.
@@ -57,26 +70,39 @@ public class WaterRespawnObject : MonoBehaviour
             waterSplashParticleSystem.gameObject.transform.position = collidedObject.transform.position;
             waterSplashParticleSystem.Play();
 
-            // Make the player "floaty"
+            // Make the player "floaty".
             var parent = collidedObject.transform.parent;
             parent.GetComponent<PlayerMovement>().groundDrag = 20;
 
-            // Teleport the player
+            // Wait a moment to show floaty effect.
             yield return new WaitForSeconds(respawnTime);
+        
+            // Reset player position AND drag at the same time.
             parent.gameObject.transform.position = respawnPoint.transform.position;
-            parent.GetComponent<PlayerMovement>().groundDrag = 1;
+            
+            parent.GetComponent<PlayerMovement>().groundDrag = parent.GetComponent<PlayerMovement>().defaultDrag;
         }
         else
         {
-            collidedObject.GetComponent<AudioSource>().PlayOneShot(waterSplashSfx);
-            waterSplashParticleSystem.gameObject.transform.position = collidedObject.transform.position;
-            waterSplashParticleSystem.Play();
+            if (collidedObject.TryGetComponent(out AudioSource objectAudio))
+            {
+                objectAudio.PlayOneShot(waterSplashSfx);
+            }
+
             yield return new WaitForSeconds(respawnTime);
             collidedObject.transform.position = respawnPoint.transform.position;
         }
+        
+        if (respawnParticleSystem != null)
+        {
+            respawnParticleSystem.Play();
+        }
 
-        respawnParticleSystem.Play();
-        _portalAudioSource.PlayOneShot(respawnSfx);
+        if (_portalAudioSource != null && respawnSfx != null)
+        {
+            _portalAudioSource.PlayOneShot(respawnSfx);
+        }
+
         _wasMoved = false;
     }
 }
