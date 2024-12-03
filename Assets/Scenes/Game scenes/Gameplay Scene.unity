@@ -387,7 +387,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20960310}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: -21.01, y: 10, z: -194.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -395,7 +395,7 @@ Transform:
   - {fileID: 1951567282}
   - {fileID: 1138643942}
   - {fileID: 587300146}
-  m_Father: {fileID: 1548760947}
+  m_Father: {fileID: 1737091086}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &29562701 stripped
 Transform:
@@ -1147,11 +1147,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 676387125}
-  - {fileID: 2121850046}
   - {fileID: 283716174}
   - {fileID: 1193294275}
   - {fileID: 1803461167}
   - {fileID: 31628942}
+  - {fileID: 2121850046}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &371124510
@@ -1481,7 +1481,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408793042}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.06832199, y: 13, z: -217.06839}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1489,7 +1489,7 @@ Transform:
   - {fileID: 1419629847}
   - {fileID: 685890138}
   - {fileID: 15062608}
-  m_Father: {fileID: 1548760947}
+  m_Father: {fileID: 1737091086}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &424202855
 PrefabInstance:
@@ -1613,6 +1613,7 @@ Transform:
   - {fileID: 1483454705}
   - {fileID: 1899726180}
   - {fileID: 717785005}
+  - {fileID: 461892622}
   m_Father: {fileID: 31628942}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &447896041 stripped
@@ -1625,6 +1626,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 446262, guid: bf5c716dea4419148879f65f4373d70d, type: 3}
   m_PrefabInstance: {fileID: 945573751}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &461892621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 461892622}
+  m_Layer: 0
+  m_Name: IslandCheckpoint4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &461892622
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461892621}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 9.56, z: -122.17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 425047953}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &473496678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2641,6 +2673,7 @@ Transform:
   m_Children:
   - {fileID: 2010037029}
   - {fileID: 1750661712}
+  - {fileID: 940404879}
   m_Father: {fileID: 31628942}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &729270661 stripped
@@ -3756,6 +3789,92 @@ MonoBehaviour:
   onTriggerExit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &940404878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 940404879}
+  - component: {fileID: 940404881}
+  - component: {fileID: 940404880}
+  m_Layer: 0
+  m_Name: Island3RespawnTrigger (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &940404879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940404878}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.7157516, y: -3.8751845, z: -38.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 727342522}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &940404880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940404878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f2ccf461060194c80ad99ffd934a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyOnTriggerEnter: 1
+  tagFilter: PlayerCollider
+  onTriggerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2121850041}
+        m_TargetAssemblyTypeName: WaterRespawnObject, Assembly-CSharp
+        m_MethodName: SetIslandCheckpoint
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!65 &940404881
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940404878}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 135.39159, y: 16.720453, z: 6.5867405}
+  m_Center: {x: 5.7157536, y: 3.875184, z: -1.4128275}
 --- !u!1001 &945573751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6268,9 +6387,6 @@ Transform:
   m_Children:
   - {fileID: 2020145117}
   - {fileID: 1737091086}
-  - {fileID: 1988490722}
-  - {fileID: 408793043}
-  - {fileID: 20960311}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1592627408
@@ -6703,7 +6819,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1988490722}
+  - {fileID: 408793043}
+  - {fileID: 20960311}
   m_Father: {fileID: 1548760947}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1743653267 stripped
@@ -7673,7 +7792,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988490721}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7681,7 +7800,7 @@ Transform:
   - {fileID: 1845593540}
   - {fileID: 1648206533}
   - {fileID: 336871288}
-  m_Father: {fileID: 1548760947}
+  m_Father: {fileID: 1737091086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2010037026
 GameObject:
@@ -8082,6 +8201,7 @@ MonoBehaviour:
   - {fileID: 1483454705}
   - {fileID: 1899726180}
   - {fileID: 717785005}
+  - {fileID: 461892622}
   respawnPoint: {fileID: 1075381620}
   respawnTime: 1
   respawnParticleSystem: {fileID: 1186906572}
