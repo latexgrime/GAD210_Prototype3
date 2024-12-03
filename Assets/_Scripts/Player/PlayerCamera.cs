@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GAD210.Leonardo.Player.CameraControl
@@ -18,21 +19,22 @@ namespace GAD210.Leonardo.Player.CameraControl
 
         private void Start()
         {
-            // Makes cursor invisible and locks in in the middle of the screen.
-
             // Get the reference to the CamTargetOrientation game object.
             camTargetOrientation = GameObject.FindGameObjectWithTag("Player").transform.Find("CamTargetOrientation");
         }
-
         
-
-        // In case its used in Unity Events.
         public void MakeCursorVisible()
         {
-            // This unlocks the cursor.
             Cursor.lockState = CursorLockMode.None;
-            // Make the cursor visible.
             Cursor.visible = true;
+        }
+
+        public void MakeCursorInvisible()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+
+            Cursor.visible = false;
+
         }
 
         private void Update()
@@ -51,6 +53,8 @@ namespace GAD210.Leonardo.Player.CameraControl
             // Rotate camera and the cameraOrientation object.
             transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
             camTargetOrientation.rotation = Quaternion.Euler(0, yRotation, 0);
+            
+            
         }
     }
 }

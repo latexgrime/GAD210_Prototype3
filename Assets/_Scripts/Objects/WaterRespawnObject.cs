@@ -5,14 +5,6 @@ using UnityEngine;
 public class WaterRespawnObject : MonoBehaviour
 {
     private AudioSource _portalAudioSource;
-
-    public enum Checkpoints
-    {
-        Island1 = 0,
-        Island2 = 1,
-        Island3 = 2
-    }
-
     [SerializeField] private Transform[] respawnPositions;
     [SerializeField] private GameObject respawnPoint;
     [SerializeField] private float respawnTime;
@@ -24,31 +16,41 @@ public class WaterRespawnObject : MonoBehaviour
 
     private void Start()
     {
-        _portalAudioSource = respawnPoint.GetComponent<AudioSource>();
-        respawnPoint.transform.position = respawnPositions[0].position;
+        if (respawnPoint.TryGetComponent(out AudioSource audioSource))
+        {
+            _portalAudioSource = audioSource;
+        }
+        if (respawnPositions.Length > 0)
+        {
+            respawnPoint.transform.position = respawnPositions[0].position;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerCollider") || other.CompareTag("CanPickUp"))
-            if (!_wasMoved)
-            {
-                _wasMoved = true;
-                StartCoroutine(MoveObject(other));
-            }
+        if ((other.CompareTag("PlayerCollider") || other.CompareTag("CanPickUp")) && !_wasMoved)
+        {
+            StartCoroutine(TeleportObject(other));
+        }
     }
 
     public void SetIslandCheckpoint(int islandNumber)
     {
-        SetNewCheckpointPosition(islandNumber - 1);
+        if (islandNumber >= 0 && islandNumber < respawnPositions.Length)
+        {
+            SetNewCheckpointPosition(islandNumber);
+        }
     }
 
     private void SetNewCheckpointPosition(int checkpointNumber)
     {
-        respawnPoint.transform.position = respawnPositions[checkpointNumber].position;
+        if (checkpointNumber >= 0 && checkpointNumber < respawnPositions.Length)
+        {
+            respawnPoint.transform.position = respawnPositions[checkpointNumber].position;
+        }
     }
 
-    private IEnumerator MoveObject(Collider collidedObject)
+    private IEnumerator TeleportObject(Collider collidedObject)
     {
         if (collidedObject.CompareTag("PlayerCollider"))
         {
@@ -64,7 +66,7 @@ public class WaterRespawnObject : MonoBehaviour
             // Teleport the player
             yield return new WaitForSeconds(respawnTime);
             parent.gameObject.transform.position = respawnPoint.transform.position;
-            parent.GetComponent<PlayerMovement>().groundDrag = 1;
+            parent.GetComponent<PlayerMovement>().groundDrag = parent.GetComponent<PlayerMovement>().defaultDrag;
         }
         else
         {
@@ -77,6 +79,5 @@ public class WaterRespawnObject : MonoBehaviour
 
         respawnParticleSystem.Play();
         _portalAudioSource.PlayOneShot(respawnSfx);
-        _wasMoved = false;
     }
 }
