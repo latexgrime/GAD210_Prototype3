@@ -146,7 +146,7 @@ public class CardManager : MonoBehaviour
     private IEnumerator ResetCard()
     {
         isResetting = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(hintTime);
         foreach (var card in selectedCards)
         {
             yield return new WaitForSeconds(0.2f);
