@@ -5,28 +5,58 @@ using UnityEngine;
 
 public class DockFaller : MonoBehaviour
 {
-    public GameObject dock;
+    #region Variables
+    [SerializeField] private GameObject dock;
 
     [SerializeField] private Animator anim;
+    
+
+    [SerializeField] private GameObject firstTarget;
+    [SerializeField] private GameObject secondTarget;
+    [SerializeField] private GameObject thirdTarget;
+    [SerializeField] private GameObject fourthTarget;
+    #endregion
+    
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        firstTarget = GameObject.Find("Target");
+        secondTarget = GameObject.Find("Target_1");
+        thirdTarget = GameObject.Find("Target_2");
+        fourthTarget = GameObject.Find("Target_3");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (EntranceExit.counter >= 4)
+            anim.SetTrigger("GoDown");
     }
 
 
-    private void OnCollisionEnter(Collision other)
+     void OnCollisionEnter(Collision other)
     {
-        Debug.Log("my name: " + name);
-        Debug.Log("collision: " + other.gameObject.name);
         dock = GameObject.Find("DockPivot(1-2)");
-        anim.SetTrigger("GoDown");
-        Debug.Log("dock: " + dock);
+        if (name == "Target")
+        {
+            EntranceExit.counter++;
+            Destroy(firstTarget);
+        }
+        if (name == "Target_1")
+        {
+            EntranceExit.counter++;
+            Destroy(secondTarget);
+        }
+        if (name == "Target_2")
+        {
+            EntranceExit.counter++;
+            Destroy(thirdTarget);
+        }
+        if (name == "Target_3")
+        {
+            EntranceExit.counter++;
+            Destroy(fourthTarget);
+        }
     }
+    
+    
 }
