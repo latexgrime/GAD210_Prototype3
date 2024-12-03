@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class CardManager : MonoBehaviour
@@ -36,7 +37,9 @@ public class CardManager : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject[] cards;
 
-    [SerializeField] private UnityEvent GameWon;
+    [SerializeField] private UnityEvent gameWonEvent;
+    [SerializeField] private UnityEvent correctMatchEvent;
+    [SerializeField] private UnityEvent incorrectMatchEvent;
     private bool gameWon;
 
     #region Game Preparation
@@ -131,12 +134,14 @@ public class CardManager : MonoBehaviour
             if (selectedCards[0].GetCardType() == selectedCards[1].GetCardType())
             {
                 Debug.Log("Match.");
+                correctMatchEvent.Invoke();
                 correctGuessesCounter++;
                 selectedCards.Clear();
             }
             else
             {
                 Debug.Log("Not a match.");
+                incorrectMatchEvent.Invoke();
                 if (!isResetting) StartCoroutine(ResetCard());
             }
         }
@@ -174,7 +179,7 @@ public class CardManager : MonoBehaviour
         {
             // Invoke the GameWon Unity Event once.
             gameWon = true;
-            GameWon.Invoke();
+            gameWonEvent.Invoke();
         }
     }
     

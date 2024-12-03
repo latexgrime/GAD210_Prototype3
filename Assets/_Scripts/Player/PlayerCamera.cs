@@ -22,16 +22,19 @@ namespace GAD210.Leonardo.Player.CameraControl
             // Get the reference to the CamTargetOrientation game object.
             camTargetOrientation = GameObject.FindGameObjectWithTag("Player").transform.Find("CamTargetOrientation");
         }
-
         
-
-        // In case its used in Unity Events.
         public void MakeCursorVisible()
         {
-            // This unlocks the cursor.
             Cursor.lockState = CursorLockMode.None;
-            // Make the cursor visible.
             Cursor.visible = true;
+        }
+
+        public void MakeCursorInvisible()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+
+            Cursor.visible = false;
+
         }
 
         private void Update()
