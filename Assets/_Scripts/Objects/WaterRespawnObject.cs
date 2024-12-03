@@ -1,7 +1,6 @@
 using System.Collections;
 using GAD210.Leonardo.Player.Movement;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class WaterRespawnObject : MonoBehaviour
 {
@@ -43,12 +42,12 @@ public class WaterRespawnObject : MonoBehaviour
     {
         SetNewCheckpointPosition(islandNumber - 1);
     }
-    
+
     private void SetNewCheckpointPosition(int checkpointNumber)
     {
         respawnPoint.transform.position = respawnPositions[checkpointNumber].position;
     }
-    
+
     private IEnumerator MoveObject(Collider collidedObject)
     {
         if (collidedObject.CompareTag("PlayerCollider"))
