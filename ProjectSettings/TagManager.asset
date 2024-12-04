@@ -8,6 +8,7 @@ TagManager:
   - Card
   - CanPickUp
   - PlayerCollider
+  - Mirror
   layers:
   - Default
   - TransparentFX
