@@ -8,6 +8,14 @@ TagManager:
   - Card
   - CanPickUp
   - PlayerCollider
+  - Sand
+  - Wood
+  - Rock
+  - Water
+  - Maze
+  - Entrance
+  - Target
+  - EndGame
   - Mirror
   layers:
   - Default
