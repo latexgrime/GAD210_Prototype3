@@ -5,18 +5,7 @@ using UnityEngine;
 
 public class EntranceExit : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public static int counter = 0;
 
     private void OnCollisionEnter(Collision other)
     {
