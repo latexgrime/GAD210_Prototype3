@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class DockFaller : MonoBehaviour
 {
@@ -9,7 +11,8 @@ public class DockFaller : MonoBehaviour
     [SerializeField] private GameObject dock;
 
     [SerializeField] private Animator anim;
-    
+
+    [SerializeField] private UnityEvent onTargetCollisionEvent;
 
     [SerializeField] private GameObject firstTarget;
     [SerializeField] private GameObject secondTarget;
@@ -40,21 +43,25 @@ public class DockFaller : MonoBehaviour
         {
             EntranceExit.counter++;
             Destroy(firstTarget);
+            onTargetCollisionEvent.Invoke();
         }
         if (name == "Target_1")
         {
             EntranceExit.counter++;
             Destroy(secondTarget);
+            onTargetCollisionEvent.Invoke();
         }
         if (name == "Target_2")
         {
             EntranceExit.counter++;
             Destroy(thirdTarget);
+            onTargetCollisionEvent.Invoke();
         }
         if (name == "Target_3")
         {
             EntranceExit.counter++;
             Destroy(fourthTarget);
+            onTargetCollisionEvent.Invoke();
         }
     }
     
