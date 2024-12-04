@@ -7344,10 +7344,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1362368815}
-        m_TargetAssemblyTypeName: GAD210.Leonardo.Player.CameraControl.PlayerCamera,
-          Assembly-CSharp
-        m_MethodName: MakeCursorVisible
+      - m_Target: {fileID: 1024931696}
+        m_TargetAssemblyTypeName: PauseMenuManager, Assembly-CSharp
+        m_MethodName: PauseGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7464,7 +7463,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1024931696}
         m_TargetAssemblyTypeName: PauseMenuManager, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
@@ -7762,7 +7761,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1024931696}
         m_TargetAssemblyTypeName: PauseMenuManager, Assembly-CSharp
         m_MethodName: QuitToMainMenu
         m_Mode: 1
@@ -7908,10 +7907,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1362368815}
-        m_TargetAssemblyTypeName: GAD210.Leonardo.Player.CameraControl.PlayerCamera,
-          Assembly-CSharp
-        m_MethodName: MakeCursorVisible
+      - m_Target: {fileID: 1024931696}
+        m_TargetAssemblyTypeName: PauseMenuManager, Assembly-CSharp
+        m_MethodName: PauseGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11851,7 +11849,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 217748684540878377, guid: e281cd82307ff7d48abbca16359b0793, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 673380629761716797, guid: e281cd82307ff7d48abbca16359b0793, type: 3}
       propertyPath: m_Mass
@@ -11964,7 +11962,7 @@ PrefabInstance:
     - target: {fileID: 9059137600826859277, guid: e281cd82307ff7d48abbca16359b0793, type: 3}
       propertyPath: pauseMenu
       value: 
-      objectReference: {fileID: 738961125}
+      objectReference: {fileID: 1126068759}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
