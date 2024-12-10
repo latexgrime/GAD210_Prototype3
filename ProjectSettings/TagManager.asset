@@ -17,6 +17,7 @@ TagManager:
   - Target
   - EndGame
   - Mirror
+  - Towers
   layers:
   - Default
   - TransparentFX
