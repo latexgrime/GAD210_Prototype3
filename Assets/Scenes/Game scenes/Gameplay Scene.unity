@@ -11855,6 +11855,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 217748684540878377, guid: e281cd82307ff7d48abbca16359b0793, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 673380629761716797, guid: e281cd82307ff7d48abbca16359b0793, type: 3}
       propertyPath: m_Mass
       value: 25
@@ -11926,6 +11930,10 @@ PrefabInstance:
     - target: {fileID: 5907028231958731577, guid: e281cd82307ff7d48abbca16359b0793, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871054637414551901, guid: e281cd82307ff7d48abbca16359b0793, type: 3}
+      propertyPath: mazeWidth
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6955276561151290595, guid: e281cd82307ff7d48abbca16359b0793, type: 3}
       propertyPath: m_Mass
@@ -15293,6 +15301,10 @@ PrefabInstance:
     - target: {fileID: 1673049706473633507, guid: 2b7c844be61e3aa4397caeeb1495f65c, type: 3}
       propertyPath: m_ClearFlags
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673049706473633507, guid: 2b7c844be61e3aa4397caeeb1495f65c, type: 3}
+      propertyPath: far clip plane
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 1673049706473633507, guid: 2b7c844be61e3aa4397caeeb1495f65c, type: 3}
       propertyPath: near clip plane

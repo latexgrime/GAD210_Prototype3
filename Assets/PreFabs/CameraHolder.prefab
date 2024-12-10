@@ -67,7 +67,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
+  near clip plane: 0.5
   far clip plane: 1000
   field of view: 90
   orthographic: 0
@@ -128,7 +128,10 @@ MonoBehaviour:
   heldObjectPositionDistance: 2
   movingObjectForce: 100
   heldObjectDragTarget: 35
-  throwObjectSFX: {fileID: 8300000, guid: b5ce7b4284e317e4e9a77f9472d9fd43, type: 3}
+  endGameEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  throwObjectSfx: {fileID: 0}
 --- !u!82 &7774812401867868878
 AudioSource:
   m_ObjectHideFlags: 0

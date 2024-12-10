@@ -17,6 +17,8 @@ public class MazeGenerator : MonoBehaviour
     private MazeCell[,] mazeGrid;
 
     [SerializeField] private float cellSize;
+
+    private Vector3 position;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +33,9 @@ public class MazeGenerator : MonoBehaviour
             for (int z = 115; z < mazeDepth; z++)
             {
                 // Store the maze in an array
-                mazeGrid[x, z] = Instantiate(mazeCellPrefab, new Vector3(x, 0, z), Quaternion.identity, this.transform);
+                position = new Vector3(x, 0, z);
+                mazeGrid[x, z] = Instantiate(mazeCellPrefab, position, Quaternion.identity, this.transform);
+                //position.x = L(-5, 5);
                 //mazeGrid[x, z].transform.localScale = new Vector3(0.8f, 1f, 0.8f);
             }
         }
