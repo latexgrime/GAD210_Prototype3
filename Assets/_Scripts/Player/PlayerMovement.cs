@@ -94,7 +94,7 @@ namespace GAD210.Leonardo.Player.Movement
         private void FixedUpdate()
         {
             MovePlayer();
-            
+            Crouch();
 
         }
 
@@ -221,6 +221,20 @@ namespace GAD210.Leonardo.Player.Movement
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
             
             audioSource.PlayOneShot(jumpSFX);
+        }
+        
+        private void Crouch()
+        {
+            if (Input.GetKey(KeyCode.C))
+            {
+                transform.localScale = new Vector3(transform.localScale.x, (float)0.4,
+                    transform.localScale.z);
+            }
+            else
+            {
+                transform.localScale = new Vector3(transform.localScale.x, (float)0.82,
+                    transform.localScale.z);
+            }
         }
 
         private void ResetJump()
