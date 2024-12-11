@@ -139,6 +139,7 @@ public class CardManager : MonoBehaviour
                 correctGuessesCounter++;
                 selectedCards.Clear();
                 shuffleInterval--;
+                Debug.Log($"Shuffle interval: {shuffleInterval}");
             }
             else
             {
@@ -184,7 +185,8 @@ public class CardManager : MonoBehaviour
             gameWonEvent.Invoke();
         }
     }
-    
+
+    [SerializeField] private UnityEvent onShuffleEvent;
     private IEnumerator ShuffleCardsPeriodically()
     {
         // The true condition can be changed to a timer if it gets implemented.
@@ -212,6 +214,7 @@ public class CardManager : MonoBehaviour
             instantiatedCards[index2] = card1;
 
             // Animate the shuffle of the cards.
+            onShuffleEvent.Invoke();
             StartCoroutine(AnimateCardShuffle(card1.transform, cardPositions[index2].position, movingDuration));
             StartCoroutine(AnimateCardShuffle(card2.transform, cardPositions[index1].position, movingDuration));
 
