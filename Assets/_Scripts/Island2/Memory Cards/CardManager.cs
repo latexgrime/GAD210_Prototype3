@@ -117,8 +117,9 @@ public class CardManager : MonoBehaviour
     public List<Card> selectedCards = new();
 
     // If the counter is the same as the amount of cards in the GameObject array of cards (line 10), then the game is won. (because all pairs are facing up)
-    private int correctGuessesCounter;
+    [SerializeField] private int correctGuessesCounter;
     public bool isResetting;
+    [SerializeField] private float cardGuessCounterMultiplier = 0.1f;
 
     private void Update()
     {
@@ -137,6 +138,7 @@ public class CardManager : MonoBehaviour
                 correctMatchEvent.Invoke();
                 correctGuessesCounter++;
                 selectedCards.Clear();
+                shuffleInterval--;
             }
             else
             {
@@ -192,7 +194,7 @@ public class CardManager : MonoBehaviour
             yield return new WaitUntil(() => !isResetting);
 
             // Start the shuffling after the shuffling interval.
-            yield return new WaitForSeconds(Random.Range(shuffleInterval, shuffleInterval + 4));
+            yield return new WaitForSeconds(shuffleInterval);
 
             // The two positions that are going to be changing places.
             var index1 = Random.Range(0, instantiatedCards.Count);
