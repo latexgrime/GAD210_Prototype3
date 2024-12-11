@@ -4376,7 +4376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintTime: 0.25
-  shuffleInterval: 3
+  shuffleInterval: 6.5
   movingDuration: 1.5
   cardPositions:
   - {fileID: 1428120731}
@@ -4468,7 +4468,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   selectedCards: []
+  correctGuessesCounter: 0
   isResetting: 0
+  cardGuessCounterMultiplier: 0.1
 --- !u!4 &406901925
 Transform:
   m_ObjectHideFlags: 0
