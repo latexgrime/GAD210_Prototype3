@@ -119,7 +119,6 @@ public class CardManager : MonoBehaviour
     // If the counter is the same as the amount of cards in the GameObject array of cards (line 10), then the game is won. (because all pairs are facing up)
     [SerializeField] private int correctGuessesCounter;
     public bool isResetting;
-    [SerializeField] private float cardGuessCounterMultiplier = 0.1f;
 
     private void Update()
     {

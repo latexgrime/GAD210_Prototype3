@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GAD210.Leonardo.Player.CameraControl
 {
@@ -9,11 +10,10 @@ namespace GAD210.Leonardo.Player.CameraControl
     /// </summary>
     public class PlayerCamera : MonoBehaviour
     {
-        [SerializeField] private float sensitivityX;
-        [SerializeField] private float sensitivityY;
+        [SerializeField] private Slider sensitivitySlider;
+        [SerializeField] private float sensitivitySliderValue;
 
         private Transform camTargetOrientation;
-
         private float xRotation;
         private float yRotation;
 
@@ -21,6 +21,18 @@ namespace GAD210.Leonardo.Player.CameraControl
         {
             // Get the reference to the CamTargetOrientation game object.
             camTargetOrientation = GameObject.FindGameObjectWithTag("Player").transform.Find("CamTargetOrientation");
+
+            if (sensitivitySlider != null)
+            {
+                sensitivitySlider.value = 100;
+                sensitivitySlider.onValueChanged.AddListener(UpdateSensitivity);
+                UpdateSensitivity(sensitivitySlider.value);
+            }
+        }
+
+        private void UpdateSensitivity(float value)
+        {
+            sensitivitySliderValue = value;
         }
         
         public void MakeCursorVisible()
@@ -40,8 +52,8 @@ namespace GAD210.Leonardo.Player.CameraControl
         private void Update()
         {
             // Handle player input.
-            var mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivityX;
-            var mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivityY;
+            var mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivitySliderValue;
+            var mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivitySliderValue;
 
             // Handle camera rotation.
             yRotation += mouseX;
