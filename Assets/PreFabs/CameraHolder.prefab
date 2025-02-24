@@ -67,7 +67,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.5
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 90
   orthographic: 0
@@ -107,8 +107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756fe12c1d944e14b96b619d652e344d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivityX: 400
-  sensitivityY: 400
+  sensitivitySlider: {fileID: 0}
+  sensitivitySliderValue: 0
 --- !u!114 &3848638420149004506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,16 +122,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crosshair: {fileID: 0}
-  launchForce: 25
+  launchForce: 50
   pickUpObjectKeycode: 101
   objectInteractionDistance: 3
-  heldObjectPositionDistance: 2
-  movingObjectForce: 100
+  heldObjectPositionDistance: 3
+  movingObjectForce: 50000
   heldObjectDragTarget: 35
   endGameEvent:
     m_PersistentCalls:
-      m_Calls: []
-  throwObjectSfx: {fileID: 0}
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: _Scripts.SceneManagement, Assembly-CSharp
+        m_MethodName: LoadNextScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  throwObjectSfx: {fileID: 8300000, guid: b5ce7b4284e317e4e9a77f9472d9fd43, type: 3}
 --- !u!82 &7774812401867868878
 AudioSource:
   m_ObjectHideFlags: 0

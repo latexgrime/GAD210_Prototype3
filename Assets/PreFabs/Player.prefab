@@ -153,7 +153,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5719225085415310129}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -184,12 +184,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de09911281e5cdf45ac098ff63755883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundDrag: 1
-  jumpForce: 5
-  jumpCooldown: 1
-  airMultiplier: 2
-  walkSpeed: 4
-  sprintSpeed: 8
+  groundDrag: 10
+  defaultDrag: 0
+  jumpForce: 1000
+  jumpCooldown: 1.25
+  airMultiplier: 0.1
+  walkSpeed: 400
+  sprintSpeed: 800
   jumpKey: 32
   sprintKey: 304
   playerHeight: 1
