@@ -1,12 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using GAD210.Leonardo.Player.CameraControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RestartEndingButton : MonoBehaviour
+namespace Scenes.Game_scenes
 {
-    public void Restart()
+    public class RestartEndingButton : MonoBehaviour
     {
-        SceneManager.LoadScene("Main_Menu");
+        private PlayerCamera _playerCamera;
+
+        private void Start()
+        {
+            MakeCursorVisible();
+        }
+
+        public void Restart()
+        {
+            SceneManager.LoadScene("Main_Menu");
+        }
+
+        public void MakeCursorVisible()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 }
